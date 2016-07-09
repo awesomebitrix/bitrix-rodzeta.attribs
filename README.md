@@ -41,6 +41,24 @@
     HEIGHT  Высота  м   visota  400
     FEATURES    Особенности товара          100
 
+### Пример фильтрации по атрибутам для использования в компоненте "Элементы раздела"
+
+    $ids = \Rodzeta\Attribs\Filter::getIds(array(
+        "PRICE" => "10000",
+    ));
+    if (empty($ids)) {
+        $ids = 0;
+    }
+    $GLOBALS["arrAttribsFilter"]["ID"] = $ids;
+
+    ...
+
+    <?$APPLICATION->IncludeComponent("bitrix:catalog.section", "furniture", 
+        array(
+            ...
+            "FILTER_NAME" => "arrAttribsFilter",
+            ...
+
 ## Демо сайт
 
 http://villa-mia.ru/
