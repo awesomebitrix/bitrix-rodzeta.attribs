@@ -49,7 +49,9 @@
     /*
     $ids = \Rodzeta\Attribs\Filter::getIds(array(
         "PRICE" => "10000;20000", // диапазон
+        "ves" => 200, // используем sef-алиасы
     ));
+    $ids = \Rodzeta\Attribs\Filter::getIds($_GET); // из параметров
     */
     if (empty($ids)) {
         $ids = 0;
