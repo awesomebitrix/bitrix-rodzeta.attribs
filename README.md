@@ -44,8 +44,13 @@
 ### Пример фильтрации по атрибутам для использования в компоненте "Элементы раздела"
 
     $ids = \Rodzeta\Attribs\Filter::getIds(array(
-        "PRICE" => "10000",
+        "PRICE" => "10000", // равно
     ));
+    /*
+    $ids = \Rodzeta\Attribs\Filter::getIds(array(
+        "PRICE" => "10000;20000", // диапазон
+    ));
+    */
     if (empty($ids)) {
         $ids = 0;
     }
