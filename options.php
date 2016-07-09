@@ -49,6 +49,8 @@ $tabControl = new CAdminTabControl("tabControl", array(
 
 if ($request->isPost() && check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
+		Option::set("rodzeta.attribs", "iblock_id", (int)$request->getPost("iblock_id"));
+		Option::set("rodzeta.attribs", "property_id", (int)$request->getPost("property_id"));
 
 		\Rodzeta\Attribs\Utils::createConfig();
 
@@ -77,12 +79,21 @@ $tabControl->begin();
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Модуль пока не содержит никаких дополнительный настроек</label>
+			<label>ID инфоблока "Контент"</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
+			<input class="input" type="text" size="4" name="iblock_id" value="<?= Option::get("rodzeta.attribs", "iblock_id", 2) ?>">
 		</td>
 	</tr>
 
+	<tr>
+		<td class="adm-detail-content-cell-l" width="50%">
+			<label>ID свойства "Характеристики"</label>
+		</td>
+		<td class="adm-detail-content-cell-r" width="50%">
+			<input name="property_id" type="text" size="4" value="<?= Option::get("rodzeta.attribs", "property_id", 2) ?>">
+		</td>
+	</tr>
 
 	<?php
 	 $tabControl->buttons();
