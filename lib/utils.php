@@ -16,7 +16,9 @@ final class Utils {
 		if (empty($item["PROPERTIES"]["ATTRIBS"])) {
 			return;
 		}
-
+		if (!empty($item["DISPLAY_PROPERTIES"]["ATTRIBS"])) {
+			unset($item["DISPLAY_PROPERTIES"]["ATTRIBS"]);
+		}
 		$attribs = &$item["PROPERTIES"]["ATTRIBS"];
 		$tmp = array();
 		foreach ($attribs["~VALUE"] as $i => $v) {
@@ -24,7 +26,6 @@ final class Utils {
 				$tmp[$attribs["DESCRIPTION"][$i]] = $v;
 			}
 		}
-
 		// sort
 		static $config = null;
 		if (empty($config)) {
