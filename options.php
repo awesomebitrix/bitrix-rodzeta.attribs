@@ -77,6 +77,10 @@ $tabControl->begin();
 
 	<?php $tabControl->beginNextTab() ?>
 
+	<tr class="heading">
+		<td colspan="2">Настройки для фильтра по атрибутам</td>
+	</tr>
+
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
 			<label>ID инфоблока "Контент"</label>
