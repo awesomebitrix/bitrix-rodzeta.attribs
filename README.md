@@ -34,7 +34,7 @@
 
 ### Пример содержимого файла rodzeta.attribs.csv
 
-   CODE NAME    UNIT    SEF_CODE    SORT
+    CODE NAME    UNIT    SEF_CODE    SORT
     PRICE   Цена    руб.    tzena   1000
     WEIGHT  Вес кг  ves 200
     WIDTH   Ширина  м   shirina 300
