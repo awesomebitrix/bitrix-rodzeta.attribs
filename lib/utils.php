@@ -38,7 +38,7 @@ final class Utils {
 		}
 	}
 
-	static function createConfig() {
+	static function createCache() {
 		$basePath = $_SERVER["DOCUMENT_ROOT"];
 
 		$fcsv = fopen($basePath . self::SRC_NAME, "r");
