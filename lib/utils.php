@@ -29,11 +29,14 @@ final class Utils {
 		// sort
 		static $config = null;
 		if (empty($config)) {
-			list($config) = self::getConfig();
+			list($config) = self::get();
 		}
 		foreach ($config as $code => $v) {
 			if (isset($tmp[$code])) {
-				$item["ATTRIBS"][$code] = $tmp[$code];
+				$item["ATTRIBS"][$code] = array(
+					"FIELD" => &$config[$code],
+					"VALUE" => $tmp[$code],
+				);
 			}
 		}
 	}
@@ -83,7 +86,7 @@ final class Utils {
 		);
 	}
 
-	static function getConfig() {
+	static function get() {
 		return include $_SERVER["DOCUMENT_ROOT"] . self::MAP_NAME;
 	}
 

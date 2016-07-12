@@ -22,14 +22,13 @@
 ### Пример для инициализации значений атрибутов в result_modifier.php компонента "Элемент каталога"
 
     \Rodzeta\Attribs\Utils::init($arResult);
-    list($arResult["ATTRIBS_CONFIG"]) = \Rodzeta\Attribs\Utils::getConfig();
 
 ### Пример использования в шаблоне компонента "Элемент каталога"
 
-    <?php foreach ($arResult["ATTRIBS"] as $code => $value) { ?>
+    <?php foreach ($arResult["ATTRIBS"] as $code => $v) { ?>
         <div>
-            <span><?= $arResult["ATTRIBS_CONFIG"][$code]["NAME"] ?>:</span>
-            <?= $value ?> <?= $arResult["ATTRIBS_CONFIG"][$code]["UNIT"] ?>
+            <span><?= $v["FIELD"]["NAME"] ?>:</span>
+            <?= $v["VALUE"] ?> <?= $v["FIELD"]["UNIT"] ?>
         </div>
     <?php } ?>
 
