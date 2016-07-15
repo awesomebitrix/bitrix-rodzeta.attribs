@@ -14,5 +14,5 @@ use Bitrix\Main\Config\Option;
 EventManager::getInstance()->addEventHandler(
 	"iblock",
 	"OnIBlockPropertyBuildList",
-	array("\Rodzeta\Attribs\Fieldtext", "GetUserTypeDescription")
+	array("\Rodzeta\Attribs\Customfield", "GetUserTypeDescription")
 );

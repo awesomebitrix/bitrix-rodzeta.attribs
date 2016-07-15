@@ -12,15 +12,15 @@ use \Bitrix\Main\Config\Option;
 
 // see /bitrix/components/bitrix/system.field.view/templates/string
 
-final class Fieldtext {
+final class Customfield {
 
   function GetUserTypeDescription() {
     return array(
       "PROPERTY_TYPE" => "S",
-      "USER_TYPE"	=> "Fieldtext",
+      "USER_TYPE"	=> "Customfield",
       "DESCRIPTION" => "Rodzeta - Атрибуты элемента",
       "BASE_TYPE" => "string",
-		  "GetPropertyFieldHtml" => array("\Rodzeta\Attribs\Fieldtext", "GetPropertyFieldHtml"),
+		  "GetPropertyFieldHtml" => array("\Rodzeta\Attribs\Customfield", "GetPropertyFieldHtml"),
 
     	// optional handlers
       /*
@@ -63,45 +63,35 @@ final class Fieldtext {
 
   	?>
 
-    <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
-    		value="<?= htmlspecialcharsex($value["DESCRIPTION"]) ?>"
-    		title="<?= $title ?>"
-		    type="text">
-    <?php if (!empty($field["ROWS"])) { ?>
-		  <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
-		    cols="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
-		    rows="<?= !empty($field["ROWS"])? $field["ROWS"] : $arProperty["ROW_COUNT"] ?>"><?= htmlspecialcharsex($value["VALUE"])?></textarea>
-		<?php } else { ?>
-		  <input name="<?= $strHTMLControlName["VALUE"] ?>" value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
-		    size="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>" type="text">
-		<?php } ?>
+    <div class="admin-form-fields"
+        style="padding-bottom:16px;vertical-align:top;"
+        data-sort="<?= $field["SORT"] ?>">
+
+      <div class="admin-form-field-label" style="display:inline;">
+        <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
+            id="<?= $strHTMLControlName["DESCRIPTION"] ?>"
+        		value="<?= htmlspecialcharsex($value["DESCRIPTION"]) ?>"
+        		title="<?= $title ?>"
+            size="12"
+            type="text">
+      </div>
+
+      <div class="admin-form-field-value" style="display:inline;">
+        <?php if (!empty($field["ROWS"])) { ?>
+    		  <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
+    		    cols="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
+    		    rows="<?= $field["ROWS"] ?>"><?= htmlspecialcharsex($value["VALUE"])?></textarea>
+    		<?php } else { ?>
+    		  <input name="<?= $strHTMLControlName["VALUE"] ?>"
+            value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
+    		    size="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
+            type="text">
+    		<?php } ?>
+      </div>
+
+    </div>
 
 		<?php
-    /*
-
-  ?>
-  	<div class="admin-form-fields" style="padding-bottom:16px;" data-sort="<?= $field["SORT"] ?>">
-      <div class="admin-form-field-label">
-        <b><?= $fieldLabel ?></b>
-        <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
-          value="<?= $fieldCode ?>" size="18" type="hidden" id="<?= $strHTMLControlName["DESCRIPTION"] ?>">
-      </div>
-      <div class="admin-form-field-value" style="display:inline;">
-        <?php include $fname ?>
-      </div>
-		</div>
-
-  <?php */ }
-
-  /*
-  static function getFieldsConfig() {
-  	static $config = null;
-    if (empty($config)) {
-      $storage = new Storage(_APP_ROOT . "/api");
-      $config = $storage->get("catalog/attribs");
-    }
-    return $config;
   }
-  */
 
 }
