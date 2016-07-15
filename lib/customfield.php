@@ -60,7 +60,6 @@ final class Customfield {
   	if (!empty($field["UNIT"])) {
   		$title .= ", " . $field["UNIT"];
   	}
-
   	?>
 
     <div class="admin-form-fields"
