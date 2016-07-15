@@ -63,10 +63,10 @@ final class Customfield {
   	?>
 
     <div class="admin-form-fields"
-        style="padding-bottom:16px;vertical-align:top;"
+        style="padding-bottom:16px;display:table;"
         data-sort="<?= $field["SORT"] ?>">
 
-      <div class="admin-form-field-label" style="display:inline;">
+      <div class="admin-form-field-label" style="vertical-align:top;display:table-cell;">
         <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
             id="<?= $strHTMLControlName["DESCRIPTION"] ?>"
         		value="<?= htmlspecialcharsex($value["DESCRIPTION"]) ?>"
@@ -75,7 +75,7 @@ final class Customfield {
             type="text">
       </div>
 
-      <div class="admin-form-field-value" style="display:inline;">
+      <div class="admin-form-field-value" style="vertical-align:top;display:table-cell;">
         <?php if (!empty($field["ROWS"])) { ?>
     		  <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
     		    cols="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
