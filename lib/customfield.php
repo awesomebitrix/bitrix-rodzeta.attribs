@@ -75,7 +75,7 @@ final class Customfield {
             type="text">
       </div>
 
-      <div class="admin-form-field-value" style="vertical-align:top;display:table-cell;">
+      <div class="admin-form-field-value" style="padding-left:6px;vertical-align:top;display:table-cell;">
         <?php if (!empty($field["ROWS"])) { ?>
     		  <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
     		    cols="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
