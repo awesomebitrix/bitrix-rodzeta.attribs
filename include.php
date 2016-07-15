@@ -11,13 +11,8 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\Config\Option;
 
-/*
-EventManager::getInstance()->addEventHandler("main", "OnBeforeProlog", function () {
-	if (CSite::InDir("/bitrix/")) {
-		return;
-	}
-
-	//...
-
-});
-*/
+EventManager::getInstance()->addEventHandler(
+	"iblock",
+	"OnIBlockPropertyBuildList",
+	array("\Rodzeta\Attribs\Fieldtext", "GetUserTypeDescription")
+);
