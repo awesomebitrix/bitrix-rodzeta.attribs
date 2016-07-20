@@ -40,11 +40,10 @@ final class Customfield {
   	if ($first) {
   		// FIX for hide button "add fields"
   		$first = false;
-  		$propertyId = Option::get("rodzeta.attribs", "property_id", 2);
   		?>
 	  		<script>
 					BX.ready(function () {
-						var $block = document.getElementById("tr_PROPERTY_<?= $propertyId ?>");
+						var $block = document.getElementById("tr_PROPERTY_<?= $arProperty["ID"] ?>");
 						$block.querySelector("input[value=\"Добавить\"]").style.display = "none";
 	          $block.querySelector("table.nopadding").style.display = "none";
 					});
