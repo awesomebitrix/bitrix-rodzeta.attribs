@@ -71,16 +71,19 @@ final class Customfield {
         		value="<?= htmlspecialcharsex($value["DESCRIPTION"]) ?>"
         		title="<?= $title ?>"
             size="12"
+            placeholder="код атрибута"
             type="text">
       </div>
 
       <div class="admin-form-field-value" style="padding-left:6px;vertical-align:top;display:table-cell;">
         <?php if (!empty($field["ROWS"])) { ?>
     		  <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
+            placeholder="значение"
     		    cols="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
     		    rows="<?= $field["ROWS"] ?>"><?= htmlspecialcharsex($value["VALUE"])?></textarea>
     		<?php } else { ?>
     		  <input name="<?= $strHTMLControlName["VALUE"] ?>"
+            placeholder="значение"
             value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
     		    size="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
             type="text">
