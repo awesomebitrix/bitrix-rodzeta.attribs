@@ -55,6 +55,13 @@ class rodzeta_attribs extends CModule {
 	    $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin/" . $this->MODULE_ID,
 	    true, true
     );
+
+    // copy example if not exists
+		$fname = $_SERVER["DOCUMENT_ROOT"] . "/upload/" . $this->MODULE_ID . ".csv";
+		if (!file_exists($fname)) {
+			copy($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/" . $this->MODULE_ID . ".csv", $fname);
+		}
+
 		return true;
 	}
 
