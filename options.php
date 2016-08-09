@@ -21,6 +21,8 @@ $app = Application::getInstance();
 $context = $app->getContext();
 $request = $context->getRequest();
 
+$currentIblockId = Option::get("rodzeta.attribs", "iblock_id", 2);
+
 Loc::loadMessages(__FILE__);
 
 $tabControl = new CAdminTabControl("tabControl", array(
@@ -72,6 +74,26 @@ $tabControl->begin();
 
 ?>
 
+<script>
+
+function RodzetaSettingsAttribsUpdate() {
+	var $selectIblock = document.getElementById("iblock_id");
+	var $selectProperty = document.getElementById("rodzeta-attribs-property-id");
+	var iblockId = $selectIblock.value;
+	var selectedOption = $selectProperty.getAttribute("data-value");
+
+	BX.ajax.loadJSON("/bitrix/admin/rodzeta.attribs/optionsproperties.php?iblock_id=" + iblockId, function (data) {
+		var html = ["<option value=''>(выберите свойство)</option>"];
+		for (var k in data) {
+			var selected = selectedOption == k? "selected" : "";
+			html.push("<option " + selected + " value='" + k + "'>[" + k + "] " + data[k] + "</option>");
+		}
+		$selectProperty.innerHTML = html.join("\n");
+	});
+};
+
+</script>
+
 <form method="post" action="<?= sprintf('%s?mid=%s&lang=%s', $request->getRequestedPage(), urlencode($mid), LANGUAGE_ID) ?> type="get">
 	<?= bitrix_sessid_post() ?>
 
@@ -87,22 +109,34 @@ $tabControl->begin();
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
 			<?= GetIBlockDropDownListEx(
-				Option::get("rodzeta.attribs", "iblock_id", 2),
+				$currentIblockId,
 				"iblock_type_id",
 				"iblock_id",
 				array(
 					"MIN_PERMISSION" => "R",
-				)
+				),
+				"",
+				"RodzetaSettingsAttribsUpdate()"
 			) ?>
 		</td>
 	</tr>
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>ID свойства "Характеристики"</label>
+			<label>Свойство "Характеристики"</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
-			<input name="property_id" type="text" size="4" value="<?= Option::get("rodzeta.attribs", "property_id", 2) ?>">
+			<select name="property_id" id="rodzeta-attribs-property-id" data-value="<?= Option::get("rodzeta.attribs", "property_id", 2) ?>">
+				<option value="">(выберите свойство)</option>
+				<?php
+				/*
+				$currentOption = Option::get("rodzeta.attribs", "property_id", 2);
+				foreach ($optionsProperties as $k => $v) {
+					$selected = $currentOption == $k? "selected" : "";
+				?>
+					<option <?= $selected ?> value="<?= $k ?>">[<?= $k ?>] <?= $v ?></option>
+				<?php } */ ?>
+			</select>
 		</td>
 	</tr>
 
@@ -113,6 +147,12 @@ $tabControl->begin();
   <input class="adm-btn-save" type="submit" name="save" value="Применить настройки">
 
 </form>
+
+<script>
+
+RodzetaSettingsAttribsUpdate();
+
+</script>
 
 <?php
 
