@@ -83,10 +83,17 @@ $tabControl->begin();
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>ID инфоблока "Контент"</label>
+			<label>Инфоблок контента</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
-			<input class="input" type="text" size="4" name="iblock_id" value="<?= Option::get("rodzeta.attribs", "iblock_id", 2) ?>">
+			<?= GetIBlockDropDownListEx(
+				Option::get("rodzeta.attribs", "iblock_id", 2),
+				"iblock_type_id",
+				"iblock_id",
+				array(
+					"MIN_PERMISSION" => "R",
+				)
+			) ?>
 		</td>
 	</tr>
 
