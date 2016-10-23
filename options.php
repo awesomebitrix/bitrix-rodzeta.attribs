@@ -22,6 +22,7 @@ $context = $app->getContext();
 $request = $context->getRequest();
 
 $currentIblockId = Option::get("rodzeta.attribs", "iblock_id", 2);
+$systemIblockId = Option::get("rodzeta.attribs", "sys_iblock_id", 3);
 
 Loc::loadMessages(__FILE__);
 
@@ -35,6 +36,7 @@ $tabControl = new CAdminTabControl("tabControl", array(
 
 ?>
 
+<?php /*
 <?= BeginNote() ?>
 <p>
 	<b>Как работает</b>
@@ -46,6 +48,7 @@ $tabControl = new CAdminTabControl("tabControl", array(
 	</ul>
 </p>
 <?= EndNote() ?>
+*/ ?>
 
 <?php
 
@@ -53,6 +56,8 @@ if ($request->isPost() && check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.attribs", "iblock_id", (int)$request->getPost("iblock_id"));
 		Option::set("rodzeta.attribs", "property_id", (int)$request->getPost("property_id"));
+
+		Option::set("rodzeta.attribs", "sys_iblock_id", (int)$request->getPost("sys_iblock_id"));
 
 		\Rodzeta\Attribs\Utils::createCache();
 
@@ -77,20 +82,20 @@ $tabControl->begin();
 <script>
 
 function RodzetaSettingsAttribsUpdate() {
-	var $selectIblock = document.getElementById("iblock_id");
-	var $selectProperty = document.getElementById("rodzeta-attribs-property-id");
-	var iblockId = $selectIblock.value;
-	var selectedOption = $selectProperty.getAttribute("data-value");
+	let $selectIblock = document.getElementById("iblock_id");
+	let $selectProperty = document.getElementById("rodzeta-attribs-property-id");
+	let iblockId = $selectIblock.value;
+	let selectedOption = $selectProperty.getAttribute("data-value");
 
 	BX.ajax.loadJSON("/bitrix/admin/rodzeta.attribs/optionsproperties.php?iblock_id=" + iblockId, function (data) {
-		var html = ["<option value=''>(выберите свойство)</option>"];
-		for (var k in data) {
-			var selected = selectedOption == k? "selected" : "";
+		let html = ["<option value=''>(выберите свойство)</option>"];
+		for (let k in data) {
+			let selected = selectedOption == k? "selected" : "";
 			html.push("<option " + selected + " value='" + k + "'>[" + k + "] " + data[k] + "</option>");
 		}
 		$selectProperty.innerHTML = html.join("\n");
 	});
-};
+}
 
 </script>
 
@@ -98,6 +103,28 @@ function RodzetaSettingsAttribsUpdate() {
 	<?= bitrix_sessid_post() ?>
 
 	<?php $tabControl->beginNextTab() ?>
+
+	<tr class="heading">
+		<td colspan="2">Настройки атрибутов</td>
+	</tr>
+
+	<tr>
+		<td class="adm-detail-content-cell-l" width="50%">
+			<label>Инфоблок настроек атрибутов</label>
+		</td>
+		<td class="adm-detail-content-cell-r" width="50%">
+			<?= GetIBlockDropDownListEx(
+				$systemIblockId,
+				"sys_iblock_type_id",
+				"sys_iblock_id",
+				array(
+					"MIN_PERMISSION" => "R",
+				),
+				"",
+				""
+			) ?>
+		</td>
+	</tr>
 
 	<tr class="heading">
 		<td colspan="2">Настройки для фильтра по атрибутам</td>
