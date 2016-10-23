@@ -1,6 +1,0 @@
-CODE	NAME	UNIT	SEF_CODE	SORT	NUMERIC	FILTER	COMPARE	COLS	ROWS
-PRICE	Цена	руб.	tzena	1000	1	1	1	8	
-WEIGHT	Вес	кг	ves	200	1	1	1	8	
-WIDTH	Ширина	м	shirina	300	1	1	1	6	
-HEIGHT	Высота	м	visota	400	1	1	1	8	
-FEATURES	Особенности товара	 		100				40	10
