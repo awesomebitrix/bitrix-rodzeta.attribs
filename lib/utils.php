@@ -120,7 +120,7 @@ final class Utils {
 					array("UF_*")
 				);
 				while ($row = $res->GetNext()) {
-					$attribs[$row["ID"]] = array(
+					$attribs[$row["CODE"]] = array(
 						"ID" => $row["ID"],
 						"NAME" => $row["NAME"],
 						"CODE" => $row["CODE"],
@@ -131,7 +131,7 @@ final class Utils {
 					// add UF_ fields
 					foreach ($row as $k => $v) {
 						if (substr($k, 0, 3) == "UF_") {
-							$attribs[$row["ID"]][$k] = $row["~" . $k];
+							$attribs[$row["CODE"]][$k] = $row["~" . $k];
 						}
 					}
 				}
@@ -140,7 +140,7 @@ final class Utils {
 
 		file_put_contents(
 			$basePath . self::MAP_NAME,
-			"<?php\nreturn " . var_export(array($attribs), true) . ";"
+			"<?php\nreturn " . var_export($attribs, true) . ";"
 		);
 	}
 
