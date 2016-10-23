@@ -43,10 +43,10 @@ final class Utils {
 		}
 	}
 
-	/*
 	static function createCache() {
 		$basePath = $_SERVER["DOCUMENT_ROOT"];
 
+		/*
 		$fcsv = fopen($basePath . self::SRC_NAME, "r");
 		if ($fcsv === FALSE) {
 			return;
@@ -82,17 +82,10 @@ final class Utils {
 				$sefCodes[$v["SEF_CODE"]] = $code;
 			}
 		}
+		*/
 
-		file_put_contents(
-			$basePath . self::MAP_NAME,
-			"<?php\nreturn " . var_export(array($attribs, $sefCodes), true) . ";"
-		);
-	}
-	*/
-
-	static function createCache() {
-		$basePath = $_SERVER["DOCUMENT_ROOT"];
 		$attribs = array();
+		$sefCodes = array();
 		$iblockId = Option::get("rodzeta.attribs", "sys_iblock_id", 3);
 		$sectionCode = Option::get("rodzeta.attribs", "attribs_section_code");
 
@@ -131,8 +124,11 @@ final class Utils {
 					// add UF_ fields
 					foreach ($row as $k => $v) {
 						if (substr($k, 0, 3) == "UF_") {
-							$attribs[$row["CODE"]][$k] = $row["~" . $k];
+							$attribs[$row["CODE"]][substr($k, 3)] = $row["~" . $k];
 						}
+					}
+					if (!empty($attribs[$row["CODE"]]["ALIAS"]) && trim($attribs[$row["CODE"]]["ALIAS"]) != "") {
+						$sefCodes[$attribs[$row["CODE"]]["ALIAS"]] = $row["CODE"];
 					}
 				}
 			}
@@ -140,7 +136,7 @@ final class Utils {
 
 		file_put_contents(
 			$basePath . self::MAP_NAME,
-			"<?php\nreturn " . var_export($attribs, true) . ";"
+			"<?php\nreturn " . var_export(array($attribs, $sefCodes), true) . ";"
 		);
 	}
 
