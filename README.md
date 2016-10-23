@@ -7,7 +7,7 @@
 
 ## Описание установки и настройки решения
 
-см. https://github.com/rivetweb/bitrix-rodzeta.referenceattribs/tree/master/screenshots
+см. https://github.com/rivetweb/bitrix-rodzeta.attribs/tree/master/screenshots
 
 - создайте и укажите раздел для хранения настроек атрибутов;
 - создайте доп. поля разделов для хранения настроек атрибутов;
