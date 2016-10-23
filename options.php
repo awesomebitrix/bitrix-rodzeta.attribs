@@ -58,6 +58,7 @@ if ($request->isPost() && check_bitrix_sessid()) {
 		Option::set("rodzeta.attribs", "property_id", (int)$request->getPost("property_id"));
 
 		Option::set("rodzeta.attribs", "sys_iblock_id", (int)$request->getPost("sys_iblock_id"));
+		Option::set("rodzeta.attribs", "attribs_section_code", $request->getPost("attribs_section_code"));
 
 		\Rodzeta\Attribs\Utils::createCache();
 
@@ -110,7 +111,7 @@ function RodzetaSettingsAttribsUpdate() {
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Инфоблок настроек атрибутов</label>
+			<label>Инфоблок</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
 			<?= GetIBlockDropDownListEx(
@@ -126,13 +127,23 @@ function RodzetaSettingsAttribsUpdate() {
 		</td>
 	</tr>
 
+	<tr>
+		<td class="adm-detail-content-cell-l" width="50%">
+			<label>Код раздела</label>
+		</td>
+		<td class="adm-detail-content-cell-r" width="50%">
+			<input name="attribs_section_code" type="text" value="<?= Option::get("rodzeta.attribs", "attribs_section_code", "RODZETA_ATTRIBS") ?>" disabled>
+			<input name="attribs_section_code" type="hidden" value="RODZETA_ATTRIBS">
+		</td>
+	</tr>
+
 	<tr class="heading">
 		<td colspan="2">Настройки для фильтра по атрибутам</td>
 	</tr>
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Инфоблок контента</label>
+			<label>Инфоблок</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
 			<?= GetIBlockDropDownListEx(

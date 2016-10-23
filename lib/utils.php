@@ -7,10 +7,12 @@
 
 namespace Rodzeta\Attribs;
 
+use Bitrix\Main\Config\Option;
+
 final class Utils {
 
 	const MAP_NAME = "/upload/cache.rodzeta.attribs.php";
-	const SRC_NAME = "/upload/rodzeta.attribs.csv";
+	//const SRC_NAME = "/upload/rodzeta.attribs.csv";
 
 	static function init(&$item) {
 		if (empty($item["PROPERTIES"]["ATTRIBS"])) {
@@ -41,6 +43,7 @@ final class Utils {
 		}
 	}
 
+	/*
 	static function createCache() {
 		$basePath = $_SERVER["DOCUMENT_ROOT"];
 
@@ -83,6 +86,61 @@ final class Utils {
 		file_put_contents(
 			$basePath . self::MAP_NAME,
 			"<?php\nreturn " . var_export(array($attribs, $sefCodes), true) . ";"
+		);
+	}
+	*/
+
+	static function createCache() {
+		$basePath = $_SERVER["DOCUMENT_ROOT"];
+		$attribs = array();
+		$iblockId = Option::get("rodzeta.attribs", "sys_iblock_id", 3);
+		$sectionCode = Option::get("rodzeta.attribs", "attribs_section_code");
+
+		if ($sectionCode != "") {
+			$res = \CIBlockSection::GetList(
+				array("SORT" => "ASC"),
+				array(
+					"IBLOCK_ID" => $iblockId,
+					"CODE" => $sectionCode,
+					"ACTIVE" => "Y",
+				),
+				true,
+				array("UF_*")
+			);
+			$sectionAttribs = $res->GetNext();
+			if ($sectionAttribs) {
+				$res = \CIBlockSection::GetList(
+					array("SORT" => "ASC"),
+					array(
+						"IBLOCK_ID" => $iblockId,
+						"SECTION_ID" => $sectionAttribs["ID"],
+						"ACTIVE" => "Y",
+					),
+					true,
+					array("UF_*")
+				);
+				while ($row = $res->GetNext()) {
+					$attribs[$row["ID"]] = array(
+						"ID" => $row["ID"],
+						"NAME" => $row["NAME"],
+						"CODE" => $row["CODE"],
+						"DESCRIPTION" => $row["DESCRIPTION"],
+						"DETAIL_PICTURE" => $row["DETAIL_PICTURE"],
+						"PICTURE" => $row["PICTURE"],
+					);
+					// add UF_ fields
+					foreach ($row as $k => $v) {
+						if (substr($k, 0, 3) == "UF_") {
+							$attribs[$row["ID"]][$k] = $row["~" . $k];
+						}
+					}
+				}
+			}
+		}
+
+		file_put_contents(
+			$basePath . self::MAP_NAME,
+			"<?php\nreturn " . var_export(array($attribs), true) . ";"
 		);
 	}
 
