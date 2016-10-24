@@ -140,7 +140,7 @@ final class Customfield {
         style="padding-bottom:16px;display:table;"
         data-sort="<?= $field["SORT"] ?>">
 
-      <div class="admin-form-field-label" style="vertical-align:top;display:table-cell;">
+      <div class="admin-form-field-label">
         <b><?= $title ?></b>
         <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
             id="<?= $strHTMLControlName["DESCRIPTION"] ?>"
@@ -151,7 +151,7 @@ final class Customfield {
             type="hidden">
       </div>
 
-      <div class="admin-form-field-value" style="padding-left:6px;vertical-align:top;display:table-cell;">
+      <div class="admin-form-field-value">
 
         <?php if ($inputWidget != "") { ?>
 
@@ -166,7 +166,7 @@ final class Customfield {
       		    rows="<?= $field["ROWS"] ?>"><?= htmlspecialcharsex($value["VALUE"])?></textarea>
       		<?php } else { ?>
       		  <input name="<?= $strHTMLControlName["VALUE"] ?>"
-              placeholder="значение"
+              placeholder="значение <?= $field["CODE"] ?>"
               value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
       		    size="<?= !empty($field["COLS"])? $field["COLS"] : "" ?>"
               type="text">
