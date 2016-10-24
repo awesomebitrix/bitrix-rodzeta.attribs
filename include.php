@@ -11,10 +11,16 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\Config\Option;
 
-\CModule::IncludeModule("iblock");
+Loader::includeModule("iblock");
 
 EventManager::getInstance()->addEventHandler(
 	"iblock",
 	"OnIBlockPropertyBuildList",
 	array("\Rodzeta\Attribs\Customfield", "GetUserTypeDescription")
+);
+
+EventManager::getInstance()->addEventHandler(
+	"iblock",
+	"OnIBlockPropertyBuildList",
+	array("\Rodzeta\Attribs\Attribsfield", "GetUserTypeDescription")
 );

@@ -12,15 +12,15 @@ use \Bitrix\Main\Config\Option;
 
 // see /bitrix/components/bitrix/system.field.view/templates/string
 
-final class Customfield {
+final class Attribsfield {
 
   function GetUserTypeDescription() {
     return array(
       "PROPERTY_TYPE" => "S",
-      "USER_TYPE"	=> "Customfield",
-      "DESCRIPTION" => "Rodzeta - Настраиваемые атрибуты",
+      "USER_TYPE"	=> "Attribsfield",
+      "DESCRIPTION" => "Rodzeta - Простые атрибуты",
       "BASE_TYPE" => "string",
-		  "GetPropertyFieldHtml" => array("\Rodzeta\Attribs\Customfield", "GetPropertyFieldHtml"),
+		  "GetPropertyFieldHtml" => array("\Rodzeta\Attribs\Attribsfield", "GetPropertyFieldHtml"),
 
     	// optional handlers
       /*
@@ -50,44 +50,26 @@ final class Customfield {
 				</script>
   		<?php
   	}
-  	list($attribs) = \Rodzeta\Attribs\Utils::get();
-  	$field = $attribs[$value["DESCRIPTION"]];
-  	$title = "";
-  	if (!empty($field["NAME"])) {
-  		$title = $field["NAME"];
-  	}
-  	if (!empty($field["UNIT"])) {
-  		$title .= ", " . $field["UNIT"];
-  	}
   	?>
 
     <div class="admin-form-fields"
-        style="padding-bottom:16px;display:table;"
-        data-sort="<?= $field["SORT"] ?>">
+        style="padding-bottom:16px;display:table;">
 
       <div class="admin-form-field-label" style="vertical-align:top;display:table-cell;">
         <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
             id="<?= $strHTMLControlName["DESCRIPTION"] ?>"
         		value="<?= htmlspecialcharsex($value["DESCRIPTION"]) ?>"
-        		title="<?= $title ?>"
-            size="12"
+        		size="12"
             placeholder="код атрибута"
             type="text">
       </div>
 
       <div class="admin-form-field-value" style="padding-left:6px;vertical-align:top;display:table-cell;">
-        <?php if (!empty($field["ROWS"])) { ?>
-    		  <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
-            placeholder="значение"
-    		    cols="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
-    		    rows="<?= $field["ROWS"] ?>"><?= htmlspecialcharsex($value["VALUE"])?></textarea>
-    		<?php } else { ?>
-    		  <input name="<?= $strHTMLControlName["VALUE"] ?>"
-            placeholder="значение"
-            value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
-    		    size="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
-            type="text">
-    		<?php } ?>
+        <input name="<?= $strHTMLControlName["VALUE"] ?>"
+          placeholder="значение"
+          value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
+  		    size="<?= $arProperty["COL_COUNT"] ?>"
+          type="text">
       </div>
 
     </div>
