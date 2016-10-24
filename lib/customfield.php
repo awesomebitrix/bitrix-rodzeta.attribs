@@ -135,7 +135,7 @@ final class Customfield {
         <b><?= $title ?></b>
         <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
             id="<?= $strHTMLControlName["DESCRIPTION"] ?>"
-        		value="<?= htmlspecialcharsex($field["DESCRIPTION"]) ?>"
+        		value="<?= htmlspecialcharsex($field["CODE"]) ?>"
         		title="<?= $title ?>"
             size="12"
             placeholder="код атрибута"
