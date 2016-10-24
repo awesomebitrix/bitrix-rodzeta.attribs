@@ -125,6 +125,15 @@ final class Customfield {
   	if (!empty($field["UNIT"])) {
   		$title .= ", " . $field["UNIT"];
   	}
+
+    $inputWidget = "";
+    if (!empty($field["INPUT_TYPE"])) {
+      $inputWidget = __DIR__ . "/customfield-" . basename($field["INPUT_TYPE"]) . ".php";
+      if (!file_exists($inputWidget)) {
+        $inputWidget = "";
+      }
+    }
+
   	?>
 
     <div class="admin-form-fields"
@@ -143,18 +152,28 @@ final class Customfield {
       </div>
 
       <div class="admin-form-field-value" style="padding-left:6px;vertical-align:top;display:table-cell;">
-        <?php if (!empty($field["ROWS"])) { ?>
-    		  <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
-            placeholder="значение"
-    		    cols="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
-    		    rows="<?= $field["ROWS"] ?>"><?= htmlspecialcharsex($value["VALUE"])?></textarea>
-    		<?php } else { ?>
-    		  <input name="<?= $strHTMLControlName["VALUE"] ?>"
-            placeholder="значение"
-            value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
-    		    size="<?= !empty($field["COLS"])? $field["COLS"] : "" ?>"
-            type="text">
-    		<?php } ?>
+
+        <?php if ($inputWidget != "") { ?>
+
+          <?php include $inputWidget; ?>
+
+        <?php } else { ?>
+
+          <?php if (!empty($field["ROWS"])) { ?>
+      		  <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
+              placeholder="значение"
+      		    cols="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
+      		    rows="<?= $field["ROWS"] ?>"><?= htmlspecialcharsex($value["VALUE"])?></textarea>
+      		<?php } else { ?>
+      		  <input name="<?= $strHTMLControlName["VALUE"] ?>"
+              placeholder="значение"
+              value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
+      		    size="<?= !empty($field["COLS"])? $field["COLS"] : "" ?>"
+              type="text">
+      		<?php } ?>
+
+        <?php } ?>
+
       </div>
 
     </div>
@@ -163,11 +182,6 @@ final class Customfield {
   }
 
 /*
-
-$fname = __DIR__ . "/attribs/" . basename($field["TYPE"]) . ".php";
-  if (!file_exists($fname)) {
-    $fname = __DIR__ . "/attribs/default.php";
-  }
 ?>
   <div class="admin-form-fields" style="padding-bottom:16px;" data-sort="<?= $field["SORT"] ?>">
     <div class="admin-form-field-label">

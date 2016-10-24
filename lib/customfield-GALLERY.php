@@ -1,10 +1,27 @@
 <?php
 
+if (\CModule::IncludeModule("fileman")) {
+  \CMedialib::Init();
+}
+
+return;
+
 $parentId = null;
 if (!empty($value["VALUE"])) {
-  $current = \rivetweb\entity\Media::selectSection(["ID" => $value["VALUE"]])->current();
-  $parentId = $current["PARENT_ID"];
+  // get parent id
+  foreach (\CMedialibCollection::GetList(array(
+        "arFilter" => array(
+          "ID" => $value["VALUE"],
+          "ACTIVE" => "Y"
+        ),
+        "arOrder" => array("NAME" => "ASC")
+      )) as $gallery) {
+    print_r($gallery);
+  }
+  //$current = \rivetweb\entity\Media::selectSection([])->current();
+  //$parentId = $current["PARENT_ID"];
 }
+
 ?>
 
 <select class="form-input-gallery-img-parent">
