@@ -127,8 +127,12 @@ final class Utils {
 							$attribs[$row["CODE"]][substr($k, 3)] = $row["~" . $k];
 						}
 					}
-					if (!empty($attribs[$row["CODE"]]["ALIAS"]) && trim($attribs[$row["CODE"]]["ALIAS"]) != "") {
+					if (!empty($attribs[$row["CODE"]]["ALIAS"])
+								&& trim($attribs[$row["CODE"]]["ALIAS"]) != "") {
 						$sefCodes[$attribs[$row["CODE"]]["ALIAS"]] = $row["CODE"];
+					}
+					if (!empty($attribs[$row["CODE"]]["SECTIONS"])) {
+						$attribs[$row["CODE"]]["SECTIONS"] = array_flip($attribs[$row["CODE"]]["SECTIONS"]);
 					}
 				}
 			}

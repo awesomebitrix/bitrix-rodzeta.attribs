@@ -46,13 +46,79 @@ final class Customfield {
 						var $block = document.getElementById("tr_PROPERTY_<?= $arProperty["ID"] ?>");
 						$block.querySelector("input[value=\"Добавить\"]").style.display = "none";
 	          $block.querySelector("table.nopadding").style.display = "none";
+
+            /*
+            // TODO sort fields
+            var fields = [];
+            var $td = null;
+            $block.find(".admin-form-fields").each(function () {
+              if ($td == null) {
+                $td = $(this).closest("td");
+              }
+              fields.push([
+                parseInt($(this).attr("data-sort")),
+                $(this).clone()
+              ]);
+              // remove from page
+              $(this).remove();
+            });
+            fields.sort(function (a, b) {
+              if (a[0] === b[0]) {
+                return 0;
+              }
+              return a[0] < b[0]? -1 : 1;
+            });
+            // insert to page
+            fields.forEach(function (v) {
+              $td.append(v[1]);
+            });
+            */
 					});
 				</script>
   		<?php
   	}
-  	list($attribs) = \Rodzeta\Attribs\Utils::get();
-  	$field = $attribs[$value["DESCRIPTION"]];
-  	$title = "";
+
+    static $attribs = null;
+    static $currentAttribs = null;
+    if ($attribs === null) {
+      list($attribs) = \Rodzeta\Attribs\Utils::get();
+      $currentAttribs = $attribs;
+    }
+
+    // current field
+    if ($value["VALUE"] != "") {
+      // not empty value - get by code
+      $field = $attribs[$value["DESCRIPTION"]];
+      unset($currentAttribs[$field["CODE"]]);
+    } else {
+      // empty value - get next from rest attribs
+      $field = array_shift($currentAttribs);
+    }
+    if (empty($field)) {
+      return;
+    }
+
+    // check section for current attrib
+    static $elementSections = null;
+    if ($elementSections === null) {
+      $elementSections = array();
+      $res = \CIBlockElement::GetElementGroups($_REQUEST["ID"], true, array("ID"));
+      while ($rowSection = $res->Fetch()) {
+        $elementSections[] = $rowSection["ID"];
+      }
+    }
+    $found = false;
+    foreach ($elementSections as $currentSectionId) {
+      if (isset($field["SECTIONS"][$currentSectionId])) {
+        $found = true;
+        break;
+      }
+    }
+    if (!$found) {
+      return;
+    }
+
+  	$title = $value["DESCRIPTION"];
   	if (!empty($field["NAME"])) {
   		$title = $field["NAME"];
   	}
@@ -66,13 +132,14 @@ final class Customfield {
         data-sort="<?= $field["SORT"] ?>">
 
       <div class="admin-form-field-label" style="vertical-align:top;display:table-cell;">
+        <b><?= $title ?></b>
         <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
             id="<?= $strHTMLControlName["DESCRIPTION"] ?>"
-        		value="<?= htmlspecialcharsex($value["DESCRIPTION"]) ?>"
+        		value="<?= htmlspecialcharsex($field["DESCRIPTION"]) ?>"
         		title="<?= $title ?>"
             size="12"
             placeholder="код атрибута"
-            type="text">
+            type="hidden">
       </div>
 
       <div class="admin-form-field-value" style="padding-left:6px;vertical-align:top;display:table-cell;">
@@ -85,7 +152,7 @@ final class Customfield {
     		  <input name="<?= $strHTMLControlName["VALUE"] ?>"
             placeholder="значение"
             value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
-    		    size="<?= !empty($field["COLS"])? $field["COLS"] : $arProperty["COL_COUNT"] ?>"
+    		    size="<?= !empty($field["COLS"])? $field["COLS"] : "" ?>"
             type="text">
     		<?php } ?>
       </div>
@@ -94,5 +161,24 @@ final class Customfield {
 
 		<?php
   }
+
+/*
+
+$fname = __DIR__ . "/attribs/" . basename($field["TYPE"]) . ".php";
+  if (!file_exists($fname)) {
+    $fname = __DIR__ . "/attribs/default.php";
+  }
+?>
+  <div class="admin-form-fields" style="padding-bottom:16px;" data-sort="<?= $field["SORT"] ?>">
+    <div class="admin-form-field-label">
+      <b><?= $fieldLabel ?></b>
+      <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
+        value="<?= $fieldCode ?>" size="18" type="hidden" id="<?= $strHTMLControlName["DESCRIPTION"] ?>">
+    </div>
+    <div class="admin-form-field-value" style="display:inline;">
+      <?php include $fname ?>
+    </div>
+  </div>
+*/
 
 }
