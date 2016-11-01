@@ -20,7 +20,7 @@ function CreateCache() {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
 
 	/*
-	$fcsv = fopen($basePath . self::SRC_NAME, "r");
+	$fcsv = fopen($basePath . _FILE_ATTRIBS_CSV, "r");
 	if ($fcsv === FALSE) {
 		return;
 	}
@@ -149,5 +149,27 @@ function Init(&$item) {
 			);
 			$item["PROPERTIES"][$code]["~VALUE"] = &$item["PROPERTIES"][$code]["VALUE"];
 		}
+	}
+}
+
+function BuildTree(&$elements, $parentId = 0) {
+	$branch = array();
+	foreach ($elements as &$element) {
+		if ($element["PARENT_ID"] == $parentId) {
+			$children = BuildTree($elements, $element["ID"]);
+			if ($children) {
+				$element["CHILDREN"] = $children;
+			}
+			$branch[$element["ID"]] = $element;
+			unset($element);
+		}
+	}
+	return $branch;
+}
+
+function PrintTree($elements, &$result, $level = 0) {
+	foreach ($elements as $element) {
+		$result[$element["ID"]] = str_repeat(" -", $level) . " " . $element["NAME"];
+		PrintTree($element["CHILDREN"], $result, $level + 1);
 	}
 }
