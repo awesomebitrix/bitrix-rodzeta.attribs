@@ -13,7 +13,7 @@ function Write($fname, $data, $sep = "\t") {
 		foreach ($row as $i => $v) {
 			$row[$i] = trim($row[$i]);
 		}
-		sort($row);
+		ksort($row);
 		if (count(array_filter($row)) == 0) {
 			continue;
 		}
