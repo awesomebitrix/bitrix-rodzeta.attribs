@@ -11,7 +11,6 @@ require __DIR__ . "/.init.php";
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\EventManager;
-use Bitrix\Main\Config\Option;
 
 Loader::includeModule("iblock");
 
