@@ -96,22 +96,7 @@ function RodzetaSettingsAttribsUpdate() {
 
 	<tr>
 		<td colspan="2">
-			<table width="100%">
-				<thead>
-					<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th>Ч</th>
-							<th>Ф</th>
-							<th>С</th>
-							<th></th>
-							<th></th>
-							<th></th>
-					</tr>
-				</thead>
+			<table width="100%" class="rodzeta-attribs">
 				<tbody>
 					<?php foreach (\Rodzeta\Attribs\AppendValues(\Encoding\Csv\Read($_SERVER["DOCUMENT_ROOT"]
 							. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV), 10, array(null, null, null, null)) as $i => $row) { ?>
@@ -121,69 +106,71 @@ function RodzetaSettingsAttribsUpdate() {
 									name="attribs[<?= $i ?>][0]"
 									value="<?= htmlspecialcharsex($row[0]) ?>"
 									style="width:90%;">
-							</td>
-							<td>
+								<input type="text" placeholder="Алиас (для ЧПУ)"
+									name="attribs[<?= $i ?>][3]"
+									value="<?= htmlspecialcharsex($row[3]) ?>"
+									style="width:90%;">
+								<br>
 								<input type="text" placeholder="Название"
 									name="attribs[<?= $i ?>][1]"
 									value="<?= htmlspecialcharsex($row[1]) ?>"
 									style="width:90%;">
-							</td>
-							<td>
 								<input type="text" placeholder="Подсказка / Ед.измерения"
 									name="attribs[<?= $i ?>][2]"
 									value="<?= htmlspecialcharsex($row[2]) ?>"
 									style="width:90%;">
 							</td>
 							<td>
-								<input type="text" placeholder="Алиас (для ЧПУ)"
-									name="attribs[<?= $i ?>][3]"
-									value="<?= htmlspecialcharsex($row[3]) ?>"
-									style="width:90%;">
+								[селектор для выбор разделов]
+							</td>
+							<td>
+								<input type="hidden" name="attribs[<?= $i ?>][5]" value="">
+								<input type="hidden" name="attribs[<?= $i ?>][6]" value="">
+								<input type="hidden" name="attribs[<?= $i ?>][7]" value="">
+								<label title="Фильтровать как числовое значение">
+									<input type="checkbox"
+									name="attribs[<?= $i ?>][5]"
+									value="1" <?= !empty($row[5])? "checked" : "" ?>>&nbsp;Числовое
+								</label>
+								<br>
+								<label title="Использовать в фильтре">
+									<input type="checkbox"
+										name="attribs[<?= $i ?>][6]"
+										value="1" <?= !empty($row[6])? "checked" : "" ?>>&nbsp;Фильтр
+								</label>
+								<br>
+								<label title="Использовать в сравнении">
+									<input type="checkbox"
+										name="attribs[<?= $i ?>][7]"
+										value="1" <?= !empty($row[7])? "checked" : "" ?>>&nbsp;Сравнение
+								</label>
 							</td>
 							<td>
 								<input type="text" placeholder="Сортировка"
 									name="attribs[<?= $i ?>][4]"
 									value="<?= htmlspecialcharsex($row[4]) ?>"
-									style="width:90%;">
-							</td>
-							<td>
-								<input type="hidden" name="attribs[<?= $i ?>][5]" value="">
-								<input type="checkbox" title="Числовое"
-									name="attribs[<?= $i ?>][5]"
-									value="1" <?= !empty($row[5])? "checked" : "" ?>>
-							</td>
-							<td>
-								<input type="hidden" name="attribs[<?= $i ?>][6]" value="">
-								<input type="checkbox" title="Использовать в фильтре"
-									name="attribs[<?= $i ?>][6]"
-									value="1" <?= !empty($row[6])? "checked" : "" ?>>
-							</td>
-							<td>
-								<input type="hidden" name="attribs[<?= $i ?>][7]" value="">
-								<input type="checkbox" title="Использовать в сравнении"
-									name="attribs[<?= $i ?>][7]"
-									value="1" <?= !empty($row[7])? "checked" : "" ?>>
-							</td>
-							<td>
+									size="10">
 								<select name="attribs[<?= $i ?>][8]" title="Тип поля">
 									<option value="">TEXT</option>
 									<option value="HTML" <?= $row[8] == "HTML"? "selected" : "" ?>>HTML</option>
 									<option value="GALLERY" <?= $row[8] == "GALLERY"? "selected" : "" ?>>GALLERY</option>
 								</select>
-							</td>
-							<td>
 								<input type="text" placeholder="Ширина поля"
 									name="attribs[<?= $i ?>][9]"
 									value="<?= htmlspecialcharsex($row[9]) ?>"
 									style="width:90%;">
-							</td>
-							<td>
 								<input type="text" placeholder="Высота поля"
 									name="attribs[<?= $i ?>][10]"
 									value="<?= htmlspecialcharsex($row[10]) ?>"
 									style="width:90%;">
 							</td>
 						</tr>
+						<tr>
+							<td colspan="4">
+								<br>
+								<br>
+							</td>
+						<tr>
 					<?php } ?>
 				</tbody>
 			</table>
@@ -274,6 +261,16 @@ function RodzetaSettingsAttribsUpdate() {
   <input class="adm-btn-save" type="submit" name="save" value="Применить настройки">
 
 </form>
+
+<style>
+
+table.rodzeta-attribs input,
+table.rodzeta-attribs select,
+table.rodzeta-attribs label {
+	margin-bottom: 4px !important;
+}
+
+</style>
 
 <script>
 
