@@ -21,11 +21,7 @@
 
 ### Пример использования в шаблоне компонента "Элемент каталога"
 
-    <?php foreach ($arResult["PROPERTIES"] as $code => $v) {
-        if ($code == "ATTRIBS" || $code == "LINKS") {
-            continue;
-        }
-    ?>
+    <?php foreach ($arResult["PROPERTIES"] as $code => $v) { ?>
     <div>
         <span><?= $v["NAME"] ?>:</span>
         <?= $v["VALUE"] ?> <?= $v["HINT"] ?>
