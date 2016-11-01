@@ -146,8 +146,8 @@ function Init(&$item) {
 			$item["PROPERTIES"][$code] = array(
 				"FIELD" => &$config[$code],
 				"VALUE" => $tmp[$code],
-				"~VALUE" => &$tmp[$code],
 			);
+			$item["PROPERTIES"][$code]["~VALUE"] = &$item["PROPERTIES"][$code]["VALUE"];
 		}
 	}
 }
