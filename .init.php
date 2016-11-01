@@ -151,6 +151,8 @@ function Init(&$item) {
 			$item["PROPERTIES"][$code]["~VALUE"] = &$item["PROPERTIES"][$code]["VALUE"];
 		}
 	}
+	unset($item["PROPERTIES"]["ATTRIBS"]);
+	//unset($item["PROPERTIES"]["LINKS"]);
 }
 
 function BuildTree(&$elements, $parentId = 0) {
