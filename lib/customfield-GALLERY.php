@@ -14,9 +14,9 @@ foreach ($arCol as $item) {
   $galleryCollections[$item["ID"]] = $item;
 }
 
-$galleryCollections = Utils::buildTree($galleryCollections);
+$galleryCollections = BuildTree($galleryCollections);
 $optionsGallery = array(0 => " --- ");
-Utils::printTree($galleryCollections, $optionsGallery);
+PrintTree($galleryCollections, $optionsGallery);
 
 ?>
 
