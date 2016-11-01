@@ -17,7 +17,7 @@
 
 ### Пример для инициализации значений атрибутов в result_modifier.php компонента "Элемент каталога"
 
-    \Rodzeta\Attribs\Utils::init($arResult);
+    \Rodzeta\Attribs\Init($arResult);
 
 ### Пример использования в шаблоне компонента "Элемент каталога"
 
