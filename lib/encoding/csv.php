@@ -10,7 +10,10 @@ function Write($fname, $data, $sep = "\t") {
 		return;
 	}
 	foreach ($data as $row) {
-		$row = array_map("trim", $row);
+		foreach ($row as $i => $v) {
+			$row[$i] = trim($row[$i]);
+		}
+		sort($row);
 		if (count(array_filter($row)) == 0) {
 			continue;
 		}
