@@ -176,3 +176,10 @@ function PrintTree($elements, &$result, $level = 0) {
 		PrintTree($element["CHILDREN"], $result, $level + 1);
 	}
 }
+
+function AppendValues($data, $n, $v) {
+	for ($i = 0; $i < $n; $i++) {
+		$data[] = $v;
+	}
+	return $data;
+}

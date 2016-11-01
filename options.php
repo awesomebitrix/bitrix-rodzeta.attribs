@@ -31,25 +31,14 @@ $tabControl = new CAdminTabControl("tabControl", array(
 		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_MAIN_TAB_SET"),
 		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_MAIN_TAB_TITLE_SET"),
   ),
+  array(
+		"DIV" => "edit2",
+		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_SET"),
+		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_TITLE_SET", array(
+			"#FILE#" => \Rodzeta\Attribs\_FILE_ATTRIBS_CSV
+		)),
+  ),
 ));
-
-?>
-
-<?php /*
-<?= BeginNote() ?>
-<p>
-	<b>Как работает</b>
-	<ul>
-		<li>загрузите или создайте файл <b><a href="<?= \Rodzeta\Attribs\Utils::SRC_NAME ?>">rodzeta.attribs.csv</a></b> в папке /upload/ с помощью
-			<a target="_blank" href="/bitrix/admin/fileman_file_edit.php?path=<?=
-					urlencode(\Rodzeta\Attribs\Utils::SRC_NAME) ?>">стандартного файлового менеджера</a>;
-		<li>после изменений в файле rodzeta.attribs.csv - нажмите в настройке модуля кнопку "Применить настройки";
-	</ul>
-</p>
-<?= EndNote() ?>
-*/ ?>
-
-<?php
 
 if ($request->isPost() && check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
@@ -59,7 +48,8 @@ if ($request->isPost() && check_bitrix_sessid()) {
 		Option::set("rodzeta.attribs", "sys_iblock_id", (int)$request->getPost("sys_iblock_id"));
 		Option::set("rodzeta.attribs", "attribs_section_code", $request->getPost("attribs_section_code"));
 
-		\Rodzeta\Attribs\CreateCache();
+		\Encoding\Csv\Write($_SERVER["DOCUMENT_ROOT"] . \Rodzeta\Attribs\_FILE_ATTRIBS_CSV, $request->getPost("attribs"));
+		//\Rodzeta\Attribs\CreateCache();
 
 		CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_ATTRIBS_OPTIONS_SAVED"),
@@ -174,6 +164,102 @@ function RodzetaSettingsAttribsUpdate() {
 					<option <?= $selected ?> value="<?= $k ?>">[<?= $k ?>] <?= $v ?></option>
 				<?php } */ ?>
 			</select>
+		</td>
+	</tr>
+
+	<?php $tabControl->beginNextTab() ?>
+
+	<tr>
+		<td colspan="2">
+			<table width="100%">
+				<tbody>
+					<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>Ч</td>
+							<td>Ф</td>
+							<td>С</td>
+							<td></td>
+							<td></td>
+							<td></td>
+					</tr>
+					<?php foreach (\Rodzeta\Attribs\AppendValues(\Encoding\Csv\Read($_SERVER["DOCUMENT_ROOT"]
+							. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV), 10, array(null, null, null, null)) as $i => $row) { ?>
+						<tr>
+							<td>
+								<input type="text" placeholder="Код атрибута"
+									name="attribs[<?= $i ?>][0]"
+									value="<?= htmlspecialcharsex($row[0]) ?>"
+									style="width:90%;">
+							</td>
+							<td>
+								<input type="text" placeholder="Название"
+									name="attribs[<?= $i ?>][1]"
+									value="<?= htmlspecialcharsex($row[1]) ?>"
+									style="width:90%;">
+							</td>
+							<td>
+								<input type="text" placeholder="Подсказка / Ед.измерения"
+									name="attribs[<?= $i ?>][2]"
+									value="<?= htmlspecialcharsex($row[2]) ?>"
+									style="width:90%;">
+							</td>
+							<td>
+								<input type="text" placeholder="Алиас (для ЧПУ)"
+									name="attribs[<?= $i ?>][3]"
+									value="<?= htmlspecialcharsex($row[3]) ?>"
+									style="width:90%;">
+							</td>
+							<td>
+								<input type="text" placeholder="Сортировка"
+									name="attribs[<?= $i ?>][4]"
+									value="<?= htmlspecialcharsex($row[4]) ?>"
+									style="width:90%;">
+							</td>
+							<td>
+								<input type="hidden" name="attribs[<?= $i ?>][5]" value="">
+								<input type="checkbox" title="Числовое"
+									name="attribs[<?= $i ?>][5]"
+									value="1" <?= !empty($row[5])? "checked" : "" ?>>
+							</td>
+							<td>
+								<input type="hidden" name="attribs[<?= $i ?>][6]" value="">
+								<input type="checkbox" title="Использовать в фильтре"
+									name="attribs[<?= $i ?>][6]"
+									value="1" <?= !empty($row[6])? "checked" : "" ?>>
+							</td>
+							<td>
+								<input type="hidden" name="attribs[<?= $i ?>][7]" value="">
+								<input type="checkbox" title="Использовать в сравнении"
+									name="attribs[<?= $i ?>][7]"
+									value="1" <?= !empty($row[7])? "checked" : "" ?>>
+							</td>
+							<td>
+								<select name="attribs[<?= $i ?>][8]" title="Тип поля">
+									<option value="" <?php//= htmlspecialcharsex($row[8]) ?>>TEXT</option>
+									<option value="HTML">HTML</option>
+									<option value="GALLERY">GALLERY</option>
+								</select>
+							</td>
+							<td>
+								<input type="text" placeholder="Ширина поля"
+									name="attribs[<?= $i ?>][9]"
+									value="<?= htmlspecialcharsex($row[9]) ?>"
+									style="width:90%;">
+							</td>
+							<td>
+								<input type="text" placeholder="Высота поля"
+									name="attribs[<?= $i ?>][10]"
+									value="<?= htmlspecialcharsex($row[10]) ?>"
+									style="width:90%;">
+							</td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
 		</td>
 	</tr>
 
