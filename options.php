@@ -285,6 +285,7 @@ BX.ready(function () {
 	var $selectSections = document.querySelectorAll(".rodzeta-attribs-sections");
 	for (var i = 0, l = $selectSections.length; i < l; i++) {
 		var sectionsIds = $selectSections[i].querySelector("input").value.split(",");
+		// TODO show section select
 		$selectSections[i].innerHTML = '<select multiple size="5"><option>---</option><option>' + sectionsIds + '</option></select>';
 	}
 
