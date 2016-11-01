@@ -241,7 +241,7 @@ function RodzetaSettingsAttribsUpdate() {
 							</td>
 							<td>
 								<select name="attribs[<?= $i ?>][8]" title="Тип поля">
-									<option value="" <?php//= htmlspecialcharsex($row[8]) ?>>TEXT</option>
+									<option value="">TEXT</option>
 									<option value="HTML" <?= $row[8] == "HTML"? "selected" : "" ?>>HTML</option>
 									<option value="GALLERY" <?= $row[8] == "GALLERY"? "selected" : "" ?>>GALLERY</option>
 								</select>
