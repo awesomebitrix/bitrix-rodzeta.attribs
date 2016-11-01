@@ -99,7 +99,7 @@ function RodzetaSettingsAttribsUpdate() {
 			<table width="100%" class="rodzeta-attribs">
 				<tbody>
 					<?php foreach (\Rodzeta\Attribs\AppendValues(\Encoding\Csv\Read($_SERVER["DOCUMENT_ROOT"]
-							. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV), 10, array(null, null, null, null)) as $i => $row) { ?>
+							. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV), 10, array_fill(0, 12, null)) as $i => $row) { ?>
 						<tr>
 							<td>
 								<input type="text" placeholder="Код атрибута"
@@ -121,7 +121,9 @@ function RodzetaSettingsAttribsUpdate() {
 									style="width:90%;">
 							</td>
 							<td>
-								[селектор для выбор разделов]
+								<div class="rodzeta-attribs-sections">
+									<input type="text" name="attribs[<?= $i ?>][11]" value="<?= htmlspecialcharsex($row[11]) ?>">
+								</div>
 							</td>
 							<td>
 								<input type="hidden" name="attribs[<?= $i ?>][5]" value="">
