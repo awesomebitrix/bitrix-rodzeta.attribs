@@ -21,11 +21,15 @@
 
 ### Пример использования в шаблоне компонента "Элемент каталога"
 
-    <?php foreach ($arResult["ATTRIBS"] as $code => $v) { ?>
-        <div>
-            <span><?= $v["FIELD"]["NAME"] ?>:</span>
-            <?= $v["VALUE"] ?> <?= $v["FIELD"]["UNIT"] ?>
-        </div>
+    <?php foreach ($arResult["PROPERTIES"] as $code => $v) {
+        if ($code == "ATTRIBS" || $code == "LINKS") {
+            continue;
+        }
+    ?>
+    <div>
+        <span><?= $v["NAME"] ?>:</span>
+        <?= $v["VALUE"] ?> <?= $v["HINT"] ?>
+    </div>
     <?php } ?>
 
 ### Пример фильтрации по атрибутам для использования в компоненте "Элементы раздела"
