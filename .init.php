@@ -120,3 +120,34 @@ function CreateCache() {
 function Config() {
 	return include $_SERVER["DOCUMENT_ROOT"] . _FILE_ATTRIBS;
 }
+
+function Init(&$item) {
+	if (empty($item["PROPERTIES"]["ATTRIBS"])) {
+		return;
+	}
+	if (!empty($item["DISPLAY_PROPERTIES"]["ATTRIBS"])) {
+		unset($item["DISPLAY_PROPERTIES"]["ATTRIBS"]);
+	}
+	$attribs = &$item["PROPERTIES"]["ATTRIBS"];
+	$tmp = array();
+	foreach ($attribs["~VALUE"] as $i => $v) {
+		if (!empty($attribs["DESCRIPTION"][$i])) {
+			$tmp[$attribs["DESCRIPTION"][$i]] = $v;
+		}
+	}
+	// sort
+	static $config = null;
+	if (empty($config)) {
+		list($config) = Config();
+	}
+	foreach ($config as $code => $v) {
+		if (isset($tmp[$code])) {
+			// TODO make strucure as bitrix PROPERTIES array
+			$item["PROPERTIES"][$code] = array(
+				"FIELD" => &$config[$code],
+				"VALUE" => $tmp[$code],
+				"~VALUE" => &$tmp[$code],
+			);
+		}
+	}
+}
