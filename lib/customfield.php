@@ -14,7 +14,7 @@ use \Bitrix\Main\Config\Option;
 
 final class Customfield {
 
-  function GetUserTypeDescription() {
+  static function GetUserTypeDescription() {
     return array(
       "PROPERTY_TYPE" => "S",
       "USER_TYPE"	=> "Customfield",
