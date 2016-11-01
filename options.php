@@ -27,16 +27,16 @@ Loc::loadMessages(__FILE__);
 
 $tabControl = new CAdminTabControl("tabControl", array(
   array(
-		"DIV" => "edit1",
-		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_MAIN_TAB_SET"),
-		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_MAIN_TAB_TITLE_SET"),
-  ),
-  array(
 		"DIV" => "edit2",
 		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_SET"),
 		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_TITLE_SET", array(
 			"#FILE#" => \Rodzeta\Attribs\_FILE_ATTRIBS_CSV
 		)),
+  ),
+  array(
+		"DIV" => "edit1",
+		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_MAIN_TAB_SET"),
+		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_MAIN_TAB_TITLE_SET"),
   ),
 ));
 
