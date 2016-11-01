@@ -59,7 +59,7 @@ if ($request->isPost() && check_bitrix_sessid()) {
 		Option::set("rodzeta.attribs", "sys_iblock_id", (int)$request->getPost("sys_iblock_id"));
 		Option::set("rodzeta.attribs", "attribs_section_code", $request->getPost("attribs_section_code"));
 
-		\Rodzeta\Attribs\Utils::createCache();
+		\Rodzeta\Attribs\CreateCache();
 
 		CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_ATTRIBS_OPTIONS_SAVED"),

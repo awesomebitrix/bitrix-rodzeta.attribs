@@ -81,7 +81,7 @@ final class Customfield {
     static $attribs = null;
     static $currentAttribs = null;
     if ($attribs === null) {
-      list($attribs) = \Rodzeta\Attribs\Utils::get();
+      list($attribs) = Config();
       $currentAttribs = $attribs;
     }
 

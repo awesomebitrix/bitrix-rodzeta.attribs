@@ -89,7 +89,7 @@ final class Filter {
 
 	static function getIds($params, $elementFields = array(), $iblockId = null, $propertyId = null) {
 		$conn = Application::getConnection();
-		list($attribs, $aliases) = \Rodzeta\Attribs\Utils::get();
+		list($attribs, $aliases) = Config();
 		$result = array();
 
 		$query = array(
