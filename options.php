@@ -172,20 +172,22 @@ function RodzetaSettingsAttribsUpdate() {
 	<tr>
 		<td colspan="2">
 			<table width="100%">
-				<tbody>
+				<thead>
 					<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td>Ч</td>
-							<td>Ф</td>
-							<td>С</td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th>Ч</th>
+							<th>Ф</th>
+							<th>С</th>
+							<th></th>
+							<th></th>
+							<th></th>
 					</tr>
+				</thead>
+				<tbody>
 					<?php foreach (\Rodzeta\Attribs\AppendValues(\Encoding\Csv\Read($_SERVER["DOCUMENT_ROOT"]
 							. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV), 10, array(null, null, null, null)) as $i => $row) { ?>
 						<tr>
@@ -240,8 +242,8 @@ function RodzetaSettingsAttribsUpdate() {
 							<td>
 								<select name="attribs[<?= $i ?>][8]" title="Тип поля">
 									<option value="" <?php//= htmlspecialcharsex($row[8]) ?>>TEXT</option>
-									<option value="HTML">HTML</option>
-									<option value="GALLERY">GALLERY</option>
+									<option value="HTML" <?= $row[8] == "HTML"? "selected" : "" ?>>HTML</option>
+									<option value="GALLERY" <?= $row[8] == "GALLERY"? "selected" : "" ?>>GALLERY</option>
 								</select>
 							</td>
 							<td>
