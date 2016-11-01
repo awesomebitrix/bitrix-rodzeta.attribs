@@ -94,6 +94,7 @@ function RodzetaSettingsAttribsUpdate() {
 
 	<?php $tabControl->beginNextTab() ?>
 
+	<?php /*
 	<tr class="heading">
 		<td colspan="2">Настройки атрибутов</td>
 	</tr>
@@ -125,6 +126,7 @@ function RodzetaSettingsAttribsUpdate() {
 			<input name="attribs_section_code" type="hidden" value="RODZETA_ATTRIBS">
 		</td>
 	</tr>
+	*/ ?>
 
 	<tr class="heading">
 		<td colspan="2">Настройки для фильтра по атрибутам</td>
