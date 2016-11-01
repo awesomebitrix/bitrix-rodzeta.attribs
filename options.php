@@ -157,14 +157,15 @@ function RodzetaSettingsAttribsUpdate() {
 									<option value="HTML" <?= $row[8] == "HTML"? "selected" : "" ?>>HTML</option>
 									<option value="GALLERY" <?= $row[8] == "GALLERY"? "selected" : "" ?>>GALLERY</option>
 								</select>
+								<br>
 								<input type="text" placeholder="Ширина поля"
 									name="attribs[<?= $i ?>][9]"
 									value="<?= htmlspecialcharsex($row[9]) ?>"
-									style="width:90%;">
+									size="10">
 								<input type="text" placeholder="Высота поля"
 									name="attribs[<?= $i ?>][10]"
 									value="<?= htmlspecialcharsex($row[10]) ?>"
-									style="width:90%;">
+									size="10">
 							</td>
 						</tr>
 						<tr>
@@ -276,7 +277,22 @@ table.rodzeta-attribs label {
 
 <script>
 
-RodzetaSettingsAttribsUpdate();
+BX.ready(function () {
+	"use strict";
+
+	RodzetaSettingsAttribsUpdate();
+
+	var $selectSections = document.querySelectorAll(".rodzeta-attribs-sections");
+	for (var i = 0, l = $selectSections.length; i < l; i++) {
+		var sectionsIds = $selectSections[i].querySelector("input").value.split(",");
+		$selectSections[i].innerHTML = '<select multiple size="5"><option>---</option><option>' + sectionsIds + '</option></select>';
+	}
+
+
+
+});
+
+
 
 </script>
 
