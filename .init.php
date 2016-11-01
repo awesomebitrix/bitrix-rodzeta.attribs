@@ -142,9 +142,10 @@ function Init(&$item) {
 	}
 	foreach ($config as $code => $v) {
 		if (isset($tmp[$code])) {
-			// TODO make strucure as bitrix PROPERTIES array
 			$item["PROPERTIES"][$code] = array(
-				"FIELD" => &$config[$code],
+				"CODE" => &$config[$code]["CODE"],
+				"NAME" => &$config[$code]["NAME"],
+				"HINT" => &$config[$code]["UNIT"],
 				"VALUE" => $tmp[$code],
 			);
 			$item["PROPERTIES"][$code]["~VALUE"] = &$item["PROPERTIES"][$code]["VALUE"];
