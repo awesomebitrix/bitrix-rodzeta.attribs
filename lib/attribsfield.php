@@ -20,7 +20,7 @@ final class Attribsfield {
       "USER_TYPE"	=> "Attribsfield",
       "DESCRIPTION" => "Rodzeta - Простые атрибуты",
       "BASE_TYPE" => "string",
-		  "GetPropertyFieldHtml" => array("\Rodzeta\Attribs\Attribsfield", "GetPropertyFieldHtml"),
+		  "GetPropertyFieldHtml" => array(__CLASS__, "GetPropertyFieldHtml"),
 
     	// optional handlers
       /*

@@ -20,7 +20,7 @@ final class Customfield {
       "USER_TYPE"	=> "Customfield",
       "DESCRIPTION" => "Rodzeta - Настраиваемые атрибуты",
       "BASE_TYPE" => "string",
-		  "GetPropertyFieldHtml" => array("\Rodzeta\Attribs\Customfield", "GetPropertyFieldHtml"),
+		  "GetPropertyFieldHtml" => array(__CLASS__, "GetPropertyFieldHtml"),
 
     	// optional handlers
       /*
