@@ -15,6 +15,7 @@ define(__NAMESPACE__ . "\_FILE_ATTRIBS", "/upload/.rodzeta.attribs.php");
 define(__NAMESPACE__ . "\_FILE_ATTRIBS_CSV", "/upload/.rodzeta.attribs.csv");
 
 require _LIB . "encoding/csv.php";
+require _LIB . "encoding/php-array.php";
 
 function CreateCache() {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
@@ -109,10 +110,7 @@ function CreateCache() {
 		}
 	}*/
 
-	file_put_contents(
-		$basePath . _FILE_ATTRIBS,
-		"<?php\nreturn " . var_export(array($attribs, $sefCodes), true) . ";"
-	);
+	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($attribs, $sefCodes));
 }
 
 function Config() {
