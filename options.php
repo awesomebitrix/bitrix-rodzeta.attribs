@@ -66,11 +66,12 @@ if ($request->isPost() && check_bitrix_sessid()) {
 			"WITH_DESCRIPTION" => "Y",
 			"VERSION" => 2,
 			"MULTIPLE_CNT" => 30,
+			"ROW_COUNT" => 1,
+			"COL_COUNT" => 40,
 		));
 		if ($newPropertyId) {
 			Option::set("rodzeta.attribs", "property_id", $newPropertyId);
 		}
-
 
 		CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_ATTRIBS_OPTIONS_SAVED"),
@@ -92,6 +93,7 @@ $tabControl->begin();
 
 <script>
 
+/*
 function RodzetaSettingsAttribsUpdate() {
 	let $selectIblock = document.getElementById("iblock_id");
 	let $selectProperty = document.getElementById("rodzeta-attribs-property-id");
@@ -107,6 +109,7 @@ function RodzetaSettingsAttribsUpdate() {
 		$selectProperty.innerHTML = html.join("\n");
 	});
 }
+*/
 
 </script>
 
@@ -277,11 +280,12 @@ function RodzetaSettingsAttribsUpdate() {
 					"MIN_PERMISSION" => "R",
 				),
 				"",
-				"RodzetaSettingsAttribsUpdate()"
+				"" //"RodzetaSettingsAttribsUpdate()"
 			) ?>
 		</td>
 	</tr>
 
+	<?php /*
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
 			<label>Свойство "Характеристики"</label>
@@ -292,6 +296,7 @@ function RodzetaSettingsAttribsUpdate() {
 			</select>
 		</td>
 	</tr>
+	*/ ?>
 
 	<?php
 	 $tabControl->buttons();
@@ -316,7 +321,7 @@ table.rodzeta-attribs label {
 BX.ready(function () {
 	"use strict";
 
-	RodzetaSettingsAttribsUpdate();
+	//RodzetaSettingsAttribsUpdate();
 
 	var $selectSections = document.querySelectorAll(".rodzeta-attribs-sections");
 	var selectSectionsSrc = document.querySelector(".rodzeta-attribs-sections-src").innerHTML;
