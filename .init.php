@@ -18,27 +18,34 @@ require _LIB . "encoding/csv.php";
 
 function CreateCache() {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
-
-	/*
-	$fcsv = fopen($basePath . _FILE_ATTRIBS_CSV, "r");
-	if ($fcsv === FALSE) {
-		return;
-	}
-
+	$headers = array(
+		"CODE",
+		"NAME",
+		"HINT",
+		"ALIAS",
+		"SORT",
+		"NUMERIC",
+		"FILTER",
+		"COMPARE",
+		"INPUT_TYPE",
+		"COLS",
+		"ROWS",
+		"SECTIONS",
+	);
 	$attribs = array();
-	$headers = array();
-	$i = 0;
-	while (($row = fgetcsv($fcsv, 4000, "\t")) !== FALSE) {
-		$i++;
-		if ($i == 1) {
-			$headers = array_map("trim", $row);
-			continue;
-		}
-		$row = array_map("trim", $row);
+	$sefCodes = array();
+	foreach (\Encoding\Csv\Read($basePath . _FILE_ATTRIBS_CSV) as $row) {
 		$attribs[$row[0]] = array_combine($headers, $row);
 		$attribs[$row[0]]["SORT"] = (int)$attribs[$row[0]]["SORT"];
+		// collect sef codes
+		if (!empty($attribs[$row[0]]["ALIAS"])) {
+			$sefCodes[$attribs[$row[0]]["ALIAS"]] = $row[0];
+		}
+		// convert sections ids
+		if (!empty($attribs[$row[0]]["SECTIONS"])) {
+			$attribs[$row[0]]["SECTIONS"] = array_flip(explode(",", $attribs[$row[0]]["SECTIONS"]));
+		}
 	}
-	fclose($fcsv);
 
 	// ordering by key SORT
 	uasort($attribs, function ($a, $b) {
@@ -48,17 +55,8 @@ function CreateCache() {
 		return ($a["SORT"] < $b["SORT"]) ? -1 : 1;
 	});
 
-	// collect sef codes
-	$sefCodes = array();
-	foreach ($attribs as $code => $v) {
-		if (trim($v["SEF_CODE"]) != "") {
-			$sefCodes[$v["SEF_CODE"]] = $code;
-		}
-	}
-	*/
-
+	/*
 	$attribs = array();
-	$sefCodes = array();
 	$iblockId = Option::get("rodzeta.attribs", "sys_iblock_id", 3);
 	$sectionCode = Option::get("rodzeta.attribs", "attribs_section_code");
 
@@ -109,7 +107,7 @@ function CreateCache() {
 				}
 			}
 		}
-	}
+	}*/
 
 	file_put_contents(
 		$basePath . _FILE_ATTRIBS,

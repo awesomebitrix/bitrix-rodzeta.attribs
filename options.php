@@ -21,7 +21,7 @@ $context = $app->getContext();
 $request = $context->getRequest();
 
 $currentIblockId = Option::get("rodzeta.attribs", "iblock_id", 2);
-$systemIblockId = Option::get("rodzeta.attribs", "sys_iblock_id", 3);
+//$systemIblockId = Option::get("rodzeta.attribs", "sys_iblock_id", 3);
 
 Loc::loadMessages(__FILE__);
 
@@ -45,11 +45,12 @@ if ($request->isPost() && check_bitrix_sessid()) {
 		Option::set("rodzeta.attribs", "iblock_id", (int)$request->getPost("iblock_id"));
 		Option::set("rodzeta.attribs", "property_id", (int)$request->getPost("property_id"));
 
-		Option::set("rodzeta.attribs", "sys_iblock_id", (int)$request->getPost("sys_iblock_id"));
-		Option::set("rodzeta.attribs", "attribs_section_code", $request->getPost("attribs_section_code"));
+		//Option::set("rodzeta.attribs", "sys_iblock_id", (int)$request->getPost("sys_iblock_id"));
+		//Option::set("rodzeta.attribs", "attribs_section_code", $request->getPost("attribs_section_code"));
 
-		\Encoding\Csv\Write($_SERVER["DOCUMENT_ROOT"] . \Rodzeta\Attribs\_FILE_ATTRIBS_CSV, $request->getPost("attribs"));
-		//\Rodzeta\Attribs\CreateCache();
+		\Encoding\Csv\Write($_SERVER["DOCUMENT_ROOT"]
+			. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV, $request->getPost("attribs"));
+		\Rodzeta\Attribs\CreateCache();
 
 		CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_ATTRIBS_OPTIONS_SAVED"),
