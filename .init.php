@@ -120,13 +120,13 @@ function Config() {
 }
 
 function Init(&$item) {
-	if (empty($item["PROPERTIES"]["ATTRIBS"])) {
+	if (empty($item["PROPERTIES"]["RODZETA_ATTRIBS"])) {
 		return;
 	}
-	if (!empty($item["DISPLAY_PROPERTIES"]["ATTRIBS"])) {
-		unset($item["DISPLAY_PROPERTIES"]["ATTRIBS"]);
+	if (!empty($item["DISPLAY_PROPERTIES"]["RODZETA_ATTRIBS"])) {
+		unset($item["DISPLAY_PROPERTIES"]["RODZETA_ATTRIBS"]);
 	}
-	$attribs = &$item["PROPERTIES"]["ATTRIBS"];
+	$attribs = &$item["PROPERTIES"]["RODZETA_ATTRIBS"];
 	$tmp = array();
 	foreach ($attribs["~VALUE"] as $i => $v) {
 		if (!empty($attribs["DESCRIPTION"][$i])) {
@@ -149,7 +149,7 @@ function Init(&$item) {
 			$item["PROPERTIES"][$code]["~VALUE"] = &$item["PROPERTIES"][$code]["VALUE"];
 		}
 	}
-	unset($item["PROPERTIES"]["ATTRIBS"]);
+	unset($item["PROPERTIES"]["RODZETA_ATTRIBS"]);
 	//unset($item["PROPERTIES"]["LINKS"]);
 }
 
