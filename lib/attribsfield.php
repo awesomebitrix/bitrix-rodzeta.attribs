@@ -68,9 +68,8 @@ final class Attribsfield {
 
         <?php if (substr($value["DESCRIPTION"], -5) == "_TEXT") { ?>
           <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
-            style="width:280px;"
-            placeholder="значение"
-            rows="<?= $arProperty["ROW_COUNT"] ?>"><?= htmlspecialcharsex($value["VALUE"]) ?></textarea>
+            style="width:280px;height:100px;"
+            placeholder="значение"><?= htmlspecialcharsex($value["VALUE"]) ?></textarea>
         <?php } else { ?>
           <input name="<?= $strHTMLControlName["VALUE"] ?>"
             placeholder="значение"
