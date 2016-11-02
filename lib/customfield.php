@@ -136,9 +136,7 @@ final class Customfield {
 
   	?>
 
-    <div class="admin-form-fields"
-        style="padding-bottom:16px;display:table;"
-        data-sort="<?= $field["SORT"] ?>">
+    <div class="admin-form-fields" data-sort="<?= $field["SORT"] ?>">
 
       <div class="admin-form-field-label">
         <b><?= $title ?></b>
@@ -152,7 +150,6 @@ final class Customfield {
       </div>
 
       <div class="admin-form-field-value">
-
         <?php if ($inputWidget != "") { ?>
 
           <?php include $inputWidget; ?>
@@ -173,8 +170,8 @@ final class Customfield {
       		<?php } ?>
 
         <?php } ?>
-
       </div>
+      <br>
 
     </div>
 
