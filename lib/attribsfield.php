@@ -65,11 +65,20 @@ final class Attribsfield {
       </div>
 
       <div class="admin-form-field-value" style="padding-left:6px;vertical-align:top;display:table-cell;">
-        <input name="<?= $strHTMLControlName["VALUE"] ?>"
-          placeholder="значение"
-          value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
-  		    size="<?= $arProperty["COL_COUNT"] ?>"
-          type="text">
+
+        <?php if (substr($value["DESCRIPTION"], -5) == "_TEXT") { ?>
+          <textarea name="<?= $strHTMLControlName["VALUE"] ?>"
+            style="width:280px;"
+            placeholder="значение"
+            rows="<?= $arProperty["ROW_COUNT"] ?>"><?= htmlspecialcharsex($value["VALUE"]) ?></textarea>
+        <?php } else { ?>
+          <input name="<?= $strHTMLControlName["VALUE"] ?>"
+            placeholder="значение"
+            value="<?= htmlspecialcharsex($value["VALUE"]) ?>"
+    		    size="<?= $arProperty["COL_COUNT"] ?>"
+            type="text">
+        <?php } ?>
+
       </div>
 
     </div>
