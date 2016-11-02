@@ -181,18 +181,4 @@ final class Customfield {
 		<?php
   }
 
-/*
-?>
-  <div class="admin-form-fields" style="padding-bottom:16px;" data-sort="<?= $field["SORT"] ?>">
-    <div class="admin-form-field-label">
-      <b><?= $fieldLabel ?></b>
-      <input name="<?= $strHTMLControlName["DESCRIPTION"] ?>"
-        value="<?= $fieldCode ?>" size="18" type="hidden" id="<?= $strHTMLControlName["DESCRIPTION"] ?>">
-    </div>
-    <div class="admin-form-field-value" style="display:inline;">
-      <?php include $fname ?>
-    </div>
-  </div>
-*/
-
 }
