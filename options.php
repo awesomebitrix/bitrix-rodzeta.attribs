@@ -43,7 +43,7 @@ $tabControl = new CAdminTabControl("tabControl", array(
 if ($request->isPost() && check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.attribs", "iblock_id", (int)$request->getPost("iblock_id"));
-		Option::set("rodzeta.attribs", "property_id", (int)$request->getPost("property_id"));
+		//Option::set("rodzeta.attribs", "property_id", (int)$request->getPost("property_id"));
 
 		//Option::set("rodzeta.attribs", "sys_iblock_id", (int)$request->getPost("sys_iblock_id"));
 		//Option::set("rodzeta.attribs", "attribs_section_code", $request->getPost("attribs_section_code"));
@@ -51,6 +51,26 @@ if ($request->isPost() && check_bitrix_sessid()) {
 		\Encoding\Csv\Write($_SERVER["DOCUMENT_ROOT"]
 			. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV, $request->getPost("attribs"));
 		\Rodzeta\Attribs\CreateCache();
+
+		// create attribs property
+		$iblockProperty = new \CIBlockProperty();
+		$newPropertyId = $iblockProperty->Add(array(
+			"IBLOCK_ID" => $currentIblockId,
+			"CODE" => "RODZETA_ATTRIBS",
+			"NAME" => "Атрибуты",
+			"ACTIVE" => "Y",
+			"SORT" => "100",
+			"PROPERTY_TYPE" => "S",
+			"USER_TYPE" => "Customfield",
+			"MULTIPLE" => "Y",
+			"WITH_DESCRIPTION" => "Y",
+			"VERSION" => 2,
+			"MULTIPLE_CNT" => 30,
+		));
+		if ($newPropertyId) {
+			Option::set("rodzeta.attribs", "property_id", $newPropertyId);
+		}
+
 
 		CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_ATTRIBS_OPTIONS_SAVED"),
@@ -269,14 +289,6 @@ function RodzetaSettingsAttribsUpdate() {
 		<td class="adm-detail-content-cell-r" width="50%">
 			<select name="property_id" id="rodzeta-attribs-property-id" data-value="<?= Option::get("rodzeta.attribs", "property_id", 2) ?>">
 				<option value="">(выберите свойство)</option>
-				<?php
-				/*
-				$currentOption = Option::get("rodzeta.attribs", "property_id", 2);
-				foreach ($optionsProperties as $k => $v) {
-					$selected = $currentOption == $k? "selected" : "";
-				?>
-					<option <?= $selected ?> value="<?= $k ?>">[<?= $k ?>] <?= $v ?></option>
-				<?php } */ ?>
 			</select>
 		</td>
 	</tr>
