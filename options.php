@@ -97,6 +97,24 @@ function RodzetaSettingsAttribsUpdate() {
 	<tr>
 		<td colspan="2">
 			<table width="100%" class="rodzeta-attribs">
+				<thead>
+					<tr>
+						<th></th>
+						<th>
+							Выводить в разделах
+							<div class="rodzeta-attribs-sections-src" style="display:none;">
+								<select multiple size="5" style="width:90%;">
+									<?php foreach (\Rodzeta\Attribs\SectionsTreeList(
+											$currentIblockId) as $optionValue => $optionName) { ?>
+										<option value="<?= $optionValue ?>"><?= $optionName ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
 				<tbody>
 					<?php foreach (\Rodzeta\Attribs\AppendValues(\Encoding\Csv\Read($_SERVER["DOCUMENT_ROOT"]
 							. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV), 10, array_fill(0, 12, null)) as $i => $row) { ?>
@@ -105,24 +123,27 @@ function RodzetaSettingsAttribsUpdate() {
 								<input type="text" placeholder="Код атрибута"
 									name="attribs[<?= $i ?>][0]"
 									value="<?= htmlspecialcharsex($row[0]) ?>"
-									style="width:90%;">
+									size="10">
+								<br>
 								<input type="text" placeholder="Алиас (для ЧПУ)"
 									name="attribs[<?= $i ?>][3]"
 									value="<?= htmlspecialcharsex($row[3]) ?>"
-									style="width:90%;">
+									size="10">
 								<br>
 								<input type="text" placeholder="Название"
 									name="attribs[<?= $i ?>][1]"
 									value="<?= htmlspecialcharsex($row[1]) ?>"
-									style="width:90%;">
+									size="10">
+								<br>
 								<input type="text" placeholder="Подсказка / Ед.измерения"
 									name="attribs[<?= $i ?>][2]"
 									value="<?= htmlspecialcharsex($row[2]) ?>"
-									style="width:90%;">
+									size="10">
 							</td>
 							<td>
 								<div class="rodzeta-attribs-sections">
-									<input type="text" name="attribs[<?= $i ?>][11]" value="<?= htmlspecialcharsex($row[11]) ?>">
+									<input type="text" style="display:none;"
+										name="attribs[<?= $i ?>][11]" value="<?= htmlspecialcharsex($row[11]) ?>">
 								</div>
 							</td>
 							<td>
@@ -152,6 +173,7 @@ function RodzetaSettingsAttribsUpdate() {
 									name="attribs[<?= $i ?>][4]"
 									value="<?= htmlspecialcharsex($row[4]) ?>"
 									size="10">
+								<br>
 								<select name="attribs[<?= $i ?>][8]" title="Тип поля">
 									<option value="">TEXT</option>
 									<option value="HTML" <?= $row[8] == "HTML"? "selected" : "" ?>>HTML</option>
@@ -162,6 +184,7 @@ function RodzetaSettingsAttribsUpdate() {
 									name="attribs[<?= $i ?>][9]"
 									value="<?= htmlspecialcharsex($row[9]) ?>"
 									size="10">
+								<br>
 								<input type="text" placeholder="Высота поля"
 									name="attribs[<?= $i ?>][10]"
 									value="<?= htmlspecialcharsex($row[10]) ?>"
@@ -283,17 +306,40 @@ BX.ready(function () {
 	RodzetaSettingsAttribsUpdate();
 
 	var $selectSections = document.querySelectorAll(".rodzeta-attribs-sections");
+	var selectSectionsSrc = document.querySelector(".rodzeta-attribs-sections-src").innerHTML;
 	for (var i = 0, l = $selectSections.length; i < l; i++) {
-		var sectionsIds = $selectSections[i].querySelector("input").value.split(",");
-		// TODO show section select
-		$selectSections[i].innerHTML = '<select multiple size="5"><option>---</option><option>' + sectionsIds + '</option></select>';
+		var $sections = $selectSections[i].querySelector("input");
+
+		// append sections selector
+		$selectSections[i].innerHTML = $selectSections[i].innerHTML + selectSectionsSrc;
+		var $selectSectionsInput = $selectSections[i].querySelector("select");
+
+		$selectSectionsInput.onchange = function (event) {
+			// update selected options
+			var sectionsIds = [];
+			for (var i in event.target.options) {
+				if (event.target.options[i].selected) {
+					sectionsIds.push(event.target.options[i].value);
+				}
+			}
+			event.target.parentNode.querySelector("input").value = sectionsIds.join(",");
+		}
+
+		// init selected options
+		var sectionsIds = $sections.value.split(",");
+		if (sectionsIds.length > 0) {
+			for (var idx in sectionsIds) {
+				if (sectionsIds[idx] != "") {
+					var $option = $selectSectionsInput.querySelector('[value="' + sectionsIds[idx] + '"]');
+					if ($option) {
+						$option.selected = true;
+					}
+				}
+			}
+		}
 	}
 
-
-
 });
-
-
 
 </script>
 

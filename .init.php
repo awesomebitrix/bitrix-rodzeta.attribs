@@ -183,3 +183,15 @@ function AppendValues($data, $n, $v) {
 	}
 	return $data;
 }
+
+function SectionsTreeList($currentIblockId) {
+	$resSections = \CIBlockSection::GetTreeList(
+		array("IBLOCK_ID" => $currentIblockId),
+		array("ID", "NAME", "DEPTH_LEVEL")
+	);
+	$sections = array();
+	while ($section = $resSections->GetNext()) {
+	  $sections[$section["ID"]] = str_repeat(" . ", $section["DEPTH_LEVEL"] - 1) . $section["NAME"];
+	}
+	return $sections;
+}
