@@ -122,8 +122,8 @@ final class Customfield {
   	if (!empty($field["NAME"])) {
   		$title = $field["NAME"];
   	}
-  	if (!empty($field["UNIT"])) {
-  		$title .= ", " . $field["UNIT"];
+  	if (!empty($field["HINT"])) {
+  		$title .= ", " . $field["HINT"];
   	}
 
     $inputWidget = "";

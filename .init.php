@@ -143,7 +143,7 @@ function Init(&$item) {
 			$item["PROPERTIES"][$code] = array(
 				"CODE" => &$config[$code]["CODE"],
 				"NAME" => &$config[$code]["NAME"],
-				"HINT" => &$config[$code]["UNIT"],
+				"HINT" => &$config[$code]["HINT"],
 				"VALUE" => $tmp[$code],
 			);
 			$item["PROPERTIES"][$code]["~VALUE"] = &$item["PROPERTIES"][$code]["VALUE"];
