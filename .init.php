@@ -28,7 +28,7 @@ function CreateCache($attribs) {
 		$row["SORT"] = (int)$row["SORT"];
 		// collect sef codes
 		if (!empty($row["ALIAS"])) {
-			$sefCodes[$row["ALIAS"]] = $row["ALIAS"];
+			$sefCodes[$row["ALIAS"]] = $row["CODE"];
 		}
 		// convert sections ids
 		if (!empty($row["SECTIONS"])) {
