@@ -5,6 +5,8 @@
  * MIT License
  ************************************************************************************************/
 
+namespace Rodzeta\Attribs;
+
 defined('B_PROLOG_INCLUDED') and (B_PROLOG_INCLUDED === true) or die();
 
 use Bitrix\Main\Application;
@@ -25,12 +27,12 @@ $currentIblockId = Option::get("rodzeta.attribs", "iblock_id", 2);
 
 Loc::loadMessages(__FILE__);
 
-$tabControl = new CAdminTabControl("tabControl", array(
+$tabControl = new \CAdminTabControl("tabControl", array(
   array(
 		"DIV" => "edit2",
 		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_SET"),
 		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_TITLE_SET", array(
-			"#FILE#" => \Rodzeta\Attribs\_FILE_ATTRIBS_CSV
+			"#FILE#" => _FILE_ATTRIBS
 		)),
   ),
   array(
@@ -40,17 +42,12 @@ $tabControl = new CAdminTabControl("tabControl", array(
   ),
 ));
 
-if ($request->isPost() && check_bitrix_sessid()) {
+if ($request->isPost() && \check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.attribs", "iblock_id", (int)$request->getPost("iblock_id"));
 		//Option::set("rodzeta.attribs", "property_id", (int)$request->getPost("property_id"));
 
-		//Option::set("rodzeta.attribs", "sys_iblock_id", (int)$request->getPost("sys_iblock_id"));
-		//Option::set("rodzeta.attribs", "attribs_section_code", $request->getPost("attribs_section_code"));
-
-		\Encoding\Csv\Write($_SERVER["DOCUMENT_ROOT"]
-			. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV, $request->getPost("attribs"));
-		\Rodzeta\Attribs\CreateCache();
+		CreateCache($request->getPost("attribs"));
 
 		// create attribs property
 		$iblockProperty = new \CIBlockProperty();
@@ -73,7 +70,7 @@ if ($request->isPost() && check_bitrix_sessid()) {
 			Option::set("rodzeta.attribs", "property_id", $newPropertyId);
 		}
 
-		CAdminMessage::showMessage(array(
+		\CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_ATTRIBS_OPTIONS_SAVED"),
 	    "TYPE" => "OK",
 	  ));
@@ -128,8 +125,7 @@ function RodzetaSettingsAttribsUpdate() {
 							Выводить в разделах
 							<div class="rodzeta-attribs-sections-src" style="display:none;">
 								<select multiple size="5" style="width:90%;">
-									<?php foreach (\Rodzeta\Attribs\SectionsTreeList(
-											$currentIblockId) as $optionValue => $optionName) { ?>
+									<?php foreach (SectionsTreeList($currentIblockId) as $optionValue => $optionName) { ?>
 										<option value="<?= $optionValue ?>"><?= $optionName ?></option>
 									<?php } ?>
 								</select>
@@ -140,78 +136,77 @@ function RodzetaSettingsAttribsUpdate() {
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach (\Rodzeta\Attribs\AppendValues(\Encoding\Csv\Read($_SERVER["DOCUMENT_ROOT"]
-							. \Rodzeta\Attribs\_FILE_ATTRIBS_CSV), 10, array_fill(0, 12, null)) as $i => $row) { ?>
+					<?php list($attribs) = Config(); foreach (AppendValues($attribs, 10, array_fill(0, 12, null)) as $i => $row) { ?>
 						<tr>
 							<td>
 								<input type="text" placeholder="Код атрибута"
-									name="attribs[<?= $i ?>][0]"
-									value="<?= htmlspecialcharsex($row[0]) ?>"
-									size="10">
+									name="attribs[<?= $i ?>][CODE]"
+									value="<?= htmlspecialcharsex($row["CODE"]) ?>"
+									size="16">
 								<br>
 								<input type="text" placeholder="Алиас (для ЧПУ)"
-									name="attribs[<?= $i ?>][3]"
-									value="<?= htmlspecialcharsex($row[3]) ?>"
-									size="10">
+									name="attribs[<?= $i ?>][ALIAS]"
+									value="<?= htmlspecialcharsex($row["ALIAS"]) ?>"
+									size="16">
 								<br>
 								<input type="text" placeholder="Название"
-									name="attribs[<?= $i ?>][1]"
-									value="<?= htmlspecialcharsex($row[1]) ?>"
-									size="10">
+									name="attribs[<?= $i ?>][NAME]"
+									value="<?= htmlspecialcharsex($row["NAME"]) ?>"
+									size="16">
 								<br>
 								<input type="text" placeholder="Подсказка / Ед.измерения"
-									name="attribs[<?= $i ?>][2]"
-									value="<?= htmlspecialcharsex($row[2]) ?>"
-									size="10">
+									name="attribs[<?= $i ?>][HINT]"
+									value="<?= htmlspecialcharsex($row["HINT"]) ?>"
+									size="16">
 							</td>
 							<td>
 								<div class="rodzeta-attribs-sections">
 									<input type="text" style="display:none;"
-										name="attribs[<?= $i ?>][11]" value="<?= htmlspecialcharsex($row[11]) ?>">
+										name="attribs[<?= $i ?>][SECTIONS]" value="<?= htmlspecialcharsex(implode(",", array_keys($row["SECTIONS"]))) ?>">
 								</div>
 							</td>
 							<td>
-								<input type="hidden" name="attribs[<?= $i ?>][5]" value="">
-								<input type="hidden" name="attribs[<?= $i ?>][6]" value="">
-								<input type="hidden" name="attribs[<?= $i ?>][7]" value="">
+								<input type="hidden" name="attribs[<?= $i ?>][NUMERIC]" value="">
+								<input type="hidden" name="attribs[<?= $i ?>][FILTER]" value="">
+								<input type="hidden" name="attribs[<?= $i ?>][COMPARE]" value="">
 								<label title="Фильтровать как числовое значение">
 									<input type="checkbox"
-									name="attribs[<?= $i ?>][5]"
-									value="1" <?= !empty($row[5])? "checked" : "" ?>>&nbsp;Числовое
+									name="attribs[<?= $i ?>][NUMERIC]"
+									value="1" <?= !empty($row["NUMERIC"])? "checked" : "" ?>>&nbsp;Числовое
 								</label>
 								<br>
 								<label title="Использовать в фильтре">
 									<input type="checkbox"
-										name="attribs[<?= $i ?>][6]"
-										value="1" <?= !empty($row[6])? "checked" : "" ?>>&nbsp;Фильтр
+										name="attribs[<?= $i ?>][FILTER]"
+										value="1" <?= !empty($row["FILTER"])? "checked" : "" ?>>&nbsp;Фильтр
 								</label>
 								<br>
 								<label title="Использовать в сравнении">
 									<input type="checkbox"
-										name="attribs[<?= $i ?>][7]"
-										value="1" <?= !empty($row[7])? "checked" : "" ?>>&nbsp;Сравнение
+										name="attribs[<?= $i ?>][COMPARE]"
+										value="1" <?= !empty($row["COMPARE"])? "checked" : "" ?>>&nbsp;Сравнение
 								</label>
 							</td>
 							<td>
 								<input type="text" placeholder="Сортировка"
-									name="attribs[<?= $i ?>][4]"
-									value="<?= htmlspecialcharsex($row[4]) ?>"
+									name="attribs[<?= $i ?>][SORT]"
+									value="<?= htmlspecialcharsex($row["SORT"]) ?>"
 									size="10">
 								<br>
-								<select name="attribs[<?= $i ?>][8]" title="Тип поля">
+								<select name="attribs[<?= $i ?>][INPUT_TYPE]" title="Тип поля">
 									<option value="">TEXT</option>
-									<option value="HTML" <?= $row[8] == "HTML"? "selected" : "" ?>>HTML</option>
-									<option value="GALLERY" <?= $row[8] == "GALLERY"? "selected" : "" ?>>GALLERY</option>
+									<option value="HTML" <?= $row["INPUT_TYPE"] == "HTML"? "selected" : "" ?>>HTML</option>
+									<option value="GALLERY" <?= $row["INPUT_TYPE"] == "GALLERY"? "selected" : "" ?>>GALLERY</option>
 								</select>
 								<br>
 								<input type="text" placeholder="Ширина поля"
-									name="attribs[<?= $i ?>][9]"
-									value="<?= htmlspecialcharsex($row[9]) ?>"
+									name="attribs[<?= $i ?>][COLS]"
+									value="<?= htmlspecialcharsex($row["COLS"]) ?>"
 									size="10">
 								<br>
 								<input type="text" placeholder="Высота поля"
-									name="attribs[<?= $i ?>][10]"
-									value="<?= htmlspecialcharsex($row[10]) ?>"
+									name="attribs[<?= $i ?>][ROWS]"
+									value="<?= htmlspecialcharsex($row["ROWS"]) ?>"
 									size="10">
 							</td>
 						</tr>
@@ -264,7 +259,7 @@ function RodzetaSettingsAttribsUpdate() {
 	*/ ?>
 
 	<tr class="heading">
-		<td colspan="2">Настройки для фильтра по атрибутам</td>
+		<td colspan="2">Настройки хранения атрибутов</td>
 	</tr>
 
 	<tr>

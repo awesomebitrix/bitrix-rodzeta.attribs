@@ -12,105 +12,40 @@ use Bitrix\Main\Config\Option;
 define(__NAMESPACE__ . "\_APP", __DIR__ . "/");
 define(__NAMESPACE__ . "\_LIB", __DIR__  . "/lib/");
 define(__NAMESPACE__ . "\_FILE_ATTRIBS", "/upload/.rodzeta.attribs.php");
-define(__NAMESPACE__ . "\_FILE_ATTRIBS_CSV", "/upload/.rodzeta.attribs.csv");
 
-require _LIB . "encoding/csv.php";
 require _LIB . "encoding/php-array.php";
 
-function CreateCache() {
+function CreateCache($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
-	$headers = array(
-		"CODE",
-		"NAME",
-		"HINT",
-		"ALIAS",
-		"SORT",
-		"NUMERIC",
-		"FILTER",
-		"COMPARE",
-		"INPUT_TYPE",
-		"COLS",
-		"ROWS",
-		"SECTIONS",
-	);
-	$attribs = array();
 	$sefCodes = array();
-	foreach (\Encoding\Csv\Read($basePath . _FILE_ATTRIBS_CSV) as $row) {
-		$attribs[$row[0]] = array_combine($headers, $row);
-		$attribs[$row[0]]["SORT"] = (int)$attribs[$row[0]]["SORT"];
+	$result = array();
+	foreach ($attribs as $row) {
+		$row["CODE"] = trim($row["CODE"]);
+		$row["ALIAS"] = trim($row["ALIAS"]);
+		if ($row["CODE"] == "" || count(array_filter($row)) == 0) {
+			continue;
+		}
+		$row["SORT"] = (int)$row["SORT"];
 		// collect sef codes
-		if (!empty($attribs[$row[0]]["ALIAS"])) {
-			$sefCodes[$attribs[$row[0]]["ALIAS"]] = $row[0];
+		if (!empty($row["ALIAS"])) {
+			$sefCodes[$row["ALIAS"]] = $row["ALIAS"];
 		}
 		// convert sections ids
-		if (!empty($attribs[$row[0]]["SECTIONS"])) {
-			$attribs[$row[0]]["SECTIONS"] = array_flip(explode(",", $attribs[$row[0]]["SECTIONS"]));
+		if (!empty($row["SECTIONS"])) {
+			$row["SECTIONS"] = array_flip(explode(",", $row["SECTIONS"]));
 		}
+		$result[$row["CODE"]] = $row;
 	}
 
 	// ordering by key SORT
-	uasort($attribs, function ($a, $b) {
+	uasort($result, function ($a, $b) {
 		if ($a["SORT"] == $b["SORT"]) {
 			return 0;
 		}
 		return ($a["SORT"] < $b["SORT"]) ? -1 : 1;
 	});
 
-	/*
-	$attribs = array();
-	$iblockId = Option::get("rodzeta.attribs", "sys_iblock_id", 3);
-	$sectionCode = Option::get("rodzeta.attribs", "attribs_section_code");
-
-	if ($sectionCode != "") {
-		$res = \CIBlockSection::GetList(
-			array("SORT" => "ASC"),
-			array(
-				"IBLOCK_ID" => $iblockId,
-				"CODE" => $sectionCode,
-				"ACTIVE" => "Y",
-			),
-			true,
-			array("UF_*")
-		);
-		$sectionAttribs = $res->GetNext();
-		if ($sectionAttribs) {
-			$res = \CIBlockSection::GetList(
-				array("SORT" => "ASC"),
-				array(
-					"IBLOCK_ID" => $iblockId,
-					"SECTION_ID" => $sectionAttribs["ID"],
-					"ACTIVE" => "Y",
-				),
-				true,
-				array("UF_*")
-			);
-			while ($row = $res->GetNext()) {
-				$attribs[$row["CODE"]] = array(
-					"ID" => $row["ID"],
-					"NAME" => $row["NAME"],
-					"CODE" => $row["CODE"],
-					"DESCRIPTION" => $row["DESCRIPTION"],
-					"DETAIL_PICTURE" => $row["DETAIL_PICTURE"],
-					"PICTURE" => $row["PICTURE"],
-				);
-				// add UF_ fields
-				foreach ($row as $k => $v) {
-					if (substr($k, 0, 3) == "UF_") {
-						$attribs[$row["CODE"]][substr($k, 3)] = $row["~" . $k];
-					}
-				}
-				if (!empty($attribs[$row["CODE"]]["ALIAS"])
-							&& trim($attribs[$row["CODE"]]["ALIAS"]) != "") {
-					$sefCodes[$attribs[$row["CODE"]]["ALIAS"]] = $row["CODE"];
-				}
-				if (!empty($attribs[$row["CODE"]]["SECTIONS"])) {
-					$attribs[$row["CODE"]]["SECTIONS"] = array_flip($attribs[$row["CODE"]]["SECTIONS"]);
-				}
-			}
-		}
-	}*/
-
-	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($attribs, $sefCodes));
+	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($result, $sefCodes));
 }
 
 function Config() {
