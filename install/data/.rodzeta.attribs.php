@@ -189,8 +189,8 @@ return array (
   ),
   1 => 
   array (
-    'price' => 'price',
-    'area' => 'area',
-    'area_sot' => 'area_sot',
+    'price' => 'PRICE',
+    'area' => 'AREA',
+    'area_sot' => 'AREA_SOT',
   ),
 );
