@@ -22,8 +22,7 @@ $app = Application::getInstance();
 $context = $app->getContext();
 $request = $context->getRequest();
 
-$currentIblockId = Option::get("rodzeta.attribs", "iblock_id", 2);
-//$systemIblockId = Option::get("rodzeta.attribs", "sys_iblock_id", 3);
+$currentIblockId = Option::get("rodzeta.site", "iblock_content", 1);
 
 Loc::loadMessages(__FILE__);
 
@@ -44,8 +43,7 @@ $tabControl = new \CAdminTabControl("tabControl", array(
 
 if ($request->isPost() && \check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
-		Option::set("rodzeta.attribs", "iblock_id", (int)$request->getPost("iblock_id"));
-		//Option::set("rodzeta.attribs", "property_id", (int)$request->getPost("property_id"));
+		Option::set("rodzeta.site", "iblock_content", (int)$request->getPost("iblock_content"));
 
 		CreateCache($request->getPost("attribs"));
 
@@ -259,7 +257,7 @@ function RodzetaSettingsAttribsUpdate() {
 	*/ ?>
 
 	<tr class="heading">
-		<td colspan="2">Настройки хранения атрибутов</td>
+		<td colspan="2">Хранение атрибутов</td>
 	</tr>
 
 	<tr>
@@ -269,8 +267,8 @@ function RodzetaSettingsAttribsUpdate() {
 		<td class="adm-detail-content-cell-r" width="50%">
 			<?= GetIBlockDropDownListEx(
 				$currentIblockId,
-				"iblock_type_id",
-				"iblock_id",
+				"iblock_type",
+				"iblock_content",
 				array(
 					"MIN_PERMISSION" => "R",
 				),

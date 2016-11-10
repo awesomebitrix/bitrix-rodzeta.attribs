@@ -118,7 +118,7 @@ final class Filter {
 			}
 			self::getExprFilter(
 				$query,
-				!empty($iblockId)? $iblockId : Option::get("rodzeta.attribs", "iblock_id", 2),
+				!empty($iblockId)? $iblockId : Option::get("rodzeta.site", "iblock_content", 1),
 				!empty($propertyId)? $propertyId : Option::get("rodzeta.attribs", "property_id", 2),
 				$code,
 				$value,
