@@ -65,6 +65,10 @@ final class Attribsfield {
 
           <?php include __DIR__ . "/customfield-HTML.php" ?>
 
+        <?php } else if (substr($value["DESCRIPTION"], -8) == "_GALLERY") { ?>
+
+          <?php include __DIR__ . "/customfield-GALLERY.php" ?>
+
         <?php } else { ?>
 
           <input name="<?= $strHTMLControlName["VALUE"] ?>"
