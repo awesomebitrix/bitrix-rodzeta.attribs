@@ -5,17 +5,17 @@ namespace Rodzeta\Attribs;
 \CModule::IncludeModule("fileman");
 \CMedialib::Init();
 
-$arCol = \CMedialibCollection::GetList(array(
-  "arFilter" => array("ACTIVE" => "Y"),
-  "arOrder" => array("NAME" => "ASC")
-));
-$galleryCollections = array();
+$arCol = \CMedialibCollection::GetList([
+  "arFilter" => ["ACTIVE" => "Y"],
+  "arOrder" => ["NAME" => "ASC"]
+]);
+$galleryCollections = [];
 foreach ($arCol as $item) {
   $galleryCollections[$item["ID"]] = $item;
 }
 
 $galleryCollections = BuildTree($galleryCollections);
-$optionsGallery = array(0 => " --- ");
+$optionsGallery = [0 => " --- "];
 PrintTree($galleryCollections, $optionsGallery);
 
 ?>

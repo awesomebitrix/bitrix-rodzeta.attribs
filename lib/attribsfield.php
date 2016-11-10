@@ -15,24 +15,13 @@ use \Bitrix\Main\Config\Option;
 final class Attribsfield {
 
   static function GetUserTypeDescription() {
-    return array(
+    return [
       "PROPERTY_TYPE" => "S",
       "USER_TYPE"	=> "Attribsfield",
       "DESCRIPTION" => "Rodzeta - Простые атрибуты",
       "BASE_TYPE" => "string",
-		  "GetPropertyFieldHtml" => array(__CLASS__, "GetPropertyFieldHtml"),
-
-    	// optional handlers
-      /*
-      "CheckFields"	=> array("CUserTypeString","CheckFields"),
-      "GetLength"	=> array("CUserTypeString","GetLength"),
-      "ConvertToDB"	=> array("CUserTypeString","ConvertToDB"),
-      "ConvertFromDB"	=> array("CUserTypeString","ConvertFromDB"),
-      "GetAdminListViewHTML" => array("CUserTypeString","GetAdminListViewHTML"),
-      "GetPublicViewHTML"	=> array("CUserTypeString","GetPublicViewHTML"),
-      "GetPublicEditHTML"	=> array("CUserTypeString","GetPublicEditHTML"),
-      */
-    );
+		  "GetPropertyFieldHtml" => [__CLASS__, "GetPropertyFieldHtml"],
+    ];
   }
 
   static function GetPropertyFieldHtml($arProperty, $value, $strHTMLControlName) {

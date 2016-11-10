@@ -15,24 +15,13 @@ use \Bitrix\Main\Config\Option;
 final class Customfield {
 
   static function GetUserTypeDescription() {
-    return array(
+    return [
       "PROPERTY_TYPE" => "S",
       "USER_TYPE"	=> "Customfield",
       "DESCRIPTION" => "Rodzeta - Настраиваемые атрибуты",
       "BASE_TYPE" => "string",
-		  "GetPropertyFieldHtml" => array(__CLASS__, "GetPropertyFieldHtml"),
-
-    	// optional handlers
-      /*
-      "CheckFields"	=> array("CUserTypeString","CheckFields"),
-      "GetLength"	=> array("CUserTypeString","GetLength"),
-      "ConvertToDB"	=> array("CUserTypeString","ConvertToDB"),
-      "ConvertFromDB"	=> array("CUserTypeString","ConvertFromDB"),
-      "GetAdminListViewHTML" => array("CUserTypeString","GetAdminListViewHTML"),
-      "GetPublicViewHTML"	=> array("CUserTypeString","GetPublicViewHTML"),
-      "GetPublicEditHTML"	=> array("CUserTypeString","GetPublicEditHTML"),
-      */
-    );
+		  "GetPropertyFieldHtml" => [__CLASS__, "GetPropertyFieldHtml"],
+    ];
   }
 
   static function GetPropertyFieldHtml($arProperty, $value, $strHTMLControlName) {
@@ -101,8 +90,8 @@ final class Customfield {
     // check section for current attrib
     static $elementSections = null;
     if ($elementSections === null) {
-      $elementSections = array();
-      $res = \CIBlockElement::GetElementGroups($_REQUEST["ID"], true, array("ID"));
+      $elementSections = [];
+      $res = \CIBlockElement::GetElementGroups($_REQUEST["ID"], true, ["ID"]);
       while ($rowSection = $res->Fetch()) {
         $elementSections[] = $rowSection["ID"];
       }

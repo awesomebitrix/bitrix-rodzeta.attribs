@@ -17,8 +17,8 @@ require _LIB . "encoding/php-array.php";
 
 function CreateCache($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
-	$sefCodes = array();
-	$result = array();
+	$sefCodes = [];
+	$result = [];
 	foreach ($attribs as $row) {
 		$row["CODE"] = trim($row["CODE"]);
 		$row["ALIAS"] = trim($row["ALIAS"]);
@@ -45,7 +45,7 @@ function CreateCache($attribs) {
 		return ($a["SORT"] < $b["SORT"]) ? -1 : 1;
 	});
 
-	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($result, $sefCodes));
+	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, [$result, $sefCodes]);
 }
 
 function Config() {
@@ -60,7 +60,7 @@ function Init(&$item) {
 		unset($item["DISPLAY_PROPERTIES"]["RODZETA_ATTRIBS"]);
 	}
 	$attribs = &$item["PROPERTIES"]["RODZETA_ATTRIBS"];
-	$tmp = array();
+	$tmp = [];
 	foreach ($attribs["~VALUE"] as $i => $v) {
 		if (!empty($attribs["DESCRIPTION"][$i])) {
 			$tmp[$attribs["DESCRIPTION"][$i]] = $v;
@@ -73,12 +73,12 @@ function Init(&$item) {
 	}
 	foreach ($config as $code => $v) {
 		if (isset($tmp[$code])) {
-			$item["PROPERTIES"][$code] = array(
+			$item["PROPERTIES"][$code] = [
 				"CODE" => &$config[$code]["CODE"],
 				"NAME" => &$config[$code]["NAME"],
 				"HINT" => &$config[$code]["HINT"],
 				"VALUE" => $tmp[$code],
-			);
+			];
 			$item["PROPERTIES"][$code]["~VALUE"] = &$item["PROPERTIES"][$code]["VALUE"];
 		}
 	}
@@ -87,7 +87,7 @@ function Init(&$item) {
 }
 
 function BuildTree(&$elements, $parentId = 0) {
-	$branch = array();
+	$branch = [];
 	foreach ($elements as &$element) {
 		if ($element["PARENT_ID"] == $parentId) {
 			$children = BuildTree($elements, $element["ID"]);
@@ -117,10 +117,10 @@ function AppendValues($data, $n, $v) {
 
 function SectionsTreeList($currentIblockId) {
 	$resSections = \CIBlockSection::GetTreeList(
-		array("IBLOCK_ID" => $currentIblockId),
-		array("ID", "NAME", "DEPTH_LEVEL")
+		["IBLOCK_ID" => $currentIblockId],
+		["ID", "NAME", "DEPTH_LEVEL"]
 	);
-	$sections = array();
+	$sections = [];
 	while ($section = $resSections->GetNext()) {
 	  $sections[$section["ID"]] = str_repeat(" . ", $section["DEPTH_LEVEL"] - 1) . $section["NAME"];
 	}

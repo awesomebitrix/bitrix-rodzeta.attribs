@@ -17,11 +17,11 @@ Loader::includeModule("iblock");
 EventManager::getInstance()->addEventHandler(
 	"iblock",
 	"OnIBlockPropertyBuildList",
-	array("\Rodzeta\Attribs\Customfield", "GetUserTypeDescription")
+	["\Rodzeta\Attribs\Customfield", "GetUserTypeDescription"]
 );
 
 EventManager::getInstance()->addEventHandler(
 	"iblock",
 	"OnIBlockPropertyBuildList",
-	array("\Rodzeta\Attribs\Attribsfield", "GetUserTypeDescription")
+	["\Rodzeta\Attribs\Attribsfield", "GetUserTypeDescription"]
 );

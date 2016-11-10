@@ -17,7 +17,7 @@ final class Filter {
 		if (!is_array($value)) {
 			return $name . " = '" . $helper->forSql($value) . "'";
 		}
-		$result = array();
+		$result = [];
 		if ($useIn) {
 			foreach ($value as $v) {
 				$result[] = $convertInt? (int)$v : ("'" . $helper->forSql($v) . "'");
@@ -45,7 +45,7 @@ final class Filter {
 
 		if ($isNumeric) {
 			if (count($value) == 2) { // range
-				$where = array();
+				$where = [];
 				if ($value[0] !== null && $value[0] !== "") {
 					$where[] = $alias . ".VALUE_NUM >= " . $helper->forSql((float)$value[0]);
 				}
@@ -87,17 +87,17 @@ final class Filter {
 				("limit " . implode(",", $query["limit"])) : "") . "\n";
 	}
 
-	static function getIds($params, $elementFields = array(), $iblockId = null, $propertyId = null) {
+	static function getIds($params, $elementFields = [], $iblockId = null, $propertyId = null) {
 		$conn = Application::getConnection();
 		list($attribs, $aliases) = Config();
-		$result = array();
+		$result = [];
 
-		$query = array(
+		$query = [
 			//"debug" => true,
-			"columns" => array("p.ID as id"),
+			"columns" => ["p.ID as id"],
 			"from" => "b_iblock_element as p",
-			"where" => array()
-		);
+			"where" => []
+		];
 
 		// add additional filter (by element ID and etc.)
 		foreach ($elementFields as $field => $value) {

@@ -26,20 +26,20 @@ $currentIblockId = Option::get("rodzeta.site", "iblock_content", 1);
 
 Loc::loadMessages(__FILE__);
 
-$tabControl = new \CAdminTabControl("tabControl", array(
-  array(
+$tabControl = new \CAdminTabControl("tabControl", [
+  [
 		"DIV" => "edit2",
 		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_SET"),
-		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_TITLE_SET", array(
+		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_TITLE_SET", [
 			"#FILE#" => _FILE_ATTRIBS
-		)),
-  ),
-  array(
+		]),
+  ],
+  [
 		"DIV" => "edit1",
 		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_MAIN_TAB_SET"),
 		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_MAIN_TAB_TITLE_SET"),
-  ),
-));
+  ],
+]);
 
 if ($request->isPost() && \check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
@@ -49,7 +49,7 @@ if ($request->isPost() && \check_bitrix_sessid()) {
 
 		// create attribs property
 		$iblockProperty = new \CIBlockProperty();
-		$newPropertyId = $iblockProperty->Add(array(
+		$newPropertyId = $iblockProperty->Add([
 			"IBLOCK_ID" => $currentIblockId,
 			"CODE" => "RODZETA_ATTRIBS",
 			"NAME" => "Атрибуты",
@@ -63,23 +63,16 @@ if ($request->isPost() && \check_bitrix_sessid()) {
 			"MULTIPLE_CNT" => 30,
 			"ROW_COUNT" => 1,
 			"COL_COUNT" => 40,
-		));
+		]);
 		if ($newPropertyId) {
 			Option::set("rodzeta.attribs", "property_id", $newPropertyId);
 		}
 
-		\CAdminMessage::showMessage(array(
+		\CAdminMessage::showMessage([
 	    "MESSAGE" => Loc::getMessage("RODZETA_ATTRIBS_OPTIONS_SAVED"),
 	    "TYPE" => "OK",
-	  ));
-	}	/*else if ($request->getPost("clear") != "") {
-
-
-		CAdminMessage::showMessage(array(
-	    "MESSAGE" => Loc::getMessage("RODZETA_ATTRIBS_OPTIONS_RESETED"),
-	    "TYPE" => "OK",
-	  ));
-	} */
+	  ]);
+	}
 }
 
 $tabControl->begin();
@@ -235,9 +228,9 @@ function RodzetaSettingsAttribsUpdate() {
 				$currentIblockId,
 				"iblock_type",
 				"iblock_content",
-				array(
+				[
 					"MIN_PERMISSION" => "R",
-				),
+				],
 				"",
 				"" //"RodzetaSettingsAttribsUpdate()"
 			) ?>

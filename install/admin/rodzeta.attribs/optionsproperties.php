@@ -7,13 +7,13 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_ad
 $currentIblockId = $_GET["iblock_id"];
 
 $resProps = \CIBlockProperty::GetList(
-	array("SORT" => "ASC"),
-	array(
+	["SORT" => "ASC"],
+	[
 		"IBLOCK_ID" => $currentIblockId,
 		"ACTIVE" => "Y",
-	)
+	]
 );
-$optionsProperties = array();
+$optionsProperties = [];
 while ($prop = $resProps->GetNext()) {
   $optionsProperties[$prop["ID"]] = $prop["NAME"];
 }

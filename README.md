@@ -30,14 +30,14 @@
 
 ### Пример фильтрации по атрибутам для использования в компоненте "Элементы раздела"
 
-    $ids = \Rodzeta\Attribs\Filter::getIds(array(
+    $ids = \Rodzeta\Attribs\Filter::getIds([
         "PRICE" => "10000", // равно
-    ));
+    ]);
     /*
-    $ids = \Rodzeta\Attribs\Filter::getIds(array(
+    $ids = \Rodzeta\Attribs\Filter::getIds([
         "PRICE" => "10000;20000", // диапазон
         "ves" => 200, // используем sef-алиасы
-    ));
+    ]);
     $ids = \Rodzeta\Attribs\Filter::getIds($_GET); // из параметров
     */
     if (empty($ids)) {
@@ -48,7 +48,6 @@
     ...
 
     <?$APPLICATION->IncludeComponent("bitrix:catalog.section", "furniture", 
-        array(
             ...
             "FILTER_NAME" => "arrAttribsFilter",
             ...
