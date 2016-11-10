@@ -5,6 +5,8 @@
  * MIT License
  ******************************************************************************/
 
+// NOTE this file must compatible with php 5.3
+
 defined('B_PROLOG_INCLUDED') and (B_PROLOG_INCLUDED === true) or die();
 
 use Bitrix\Main\Application;
@@ -16,7 +18,7 @@ Loc::loadMessages(__FILE__);
 
 class rodzeta_attribs extends CModule {
 
-	var $MODULE_ID = "rodzeta.attribs"; // FIX for bitrix rules
+	var $MODULE_ID = "rodzeta.attribs"; // NOTE using "var" for bitrix rules
 
 	public $MODULE_VERSION;
 	public $MODULE_VERSION_DATE;
@@ -31,7 +33,7 @@ class rodzeta_attribs extends CModule {
 	//public $NEED_MODULES = array();
 
 	function __construct() {
-		$this->MODULE_ID = "rodzeta.attribs"; // NEED for showing module in /bitrix/admin/partner_modules.php?lang=ru
+		$this->MODULE_ID = "rodzeta.attribs"; // NOTE for showing module in /bitrix/admin/partner_modules.php?lang=ru
 
 		$arModuleVersion = array();
 		include __DIR__ . "/version.php";
@@ -71,6 +73,12 @@ class rodzeta_attribs extends CModule {
 	}
 
 	function DoInstall() {
+		if (version_compare(PHP_VERSION, '7', '<')) {
+			global $APPLICATION;
+   		$APPLICATION->ThrowException(Loc::getMessage("RODZETA_REQUIREMENTS_PHP_VERSION"));
+			return false;
+		}
+
 		ModuleManager::registerModule($this->MODULE_ID);
 		RegisterModuleDependences("main", "OnPageStart", $this->MODULE_ID);
 		$this->InstallFiles();
