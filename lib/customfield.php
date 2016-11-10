@@ -87,7 +87,7 @@ final class Customfield {
       return;
     }
 
-    // check section for current attrib
+    // check all element sections for showing current attrib
     static $elementSections = null;
     if ($elementSections === null) {
       $elementSections = [];
