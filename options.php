@@ -222,40 +222,6 @@ function RodzetaSettingsAttribsUpdate() {
 
 	<?php $tabControl->beginNextTab() ?>
 
-	<?php /*
-	<tr class="heading">
-		<td colspan="2">Настройки атрибутов</td>
-	</tr>
-
-	<tr>
-		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Инфоблок</label>
-		</td>
-		<td class="adm-detail-content-cell-r" width="50%">
-			<?= GetIBlockDropDownListEx(
-				$systemIblockId,
-				"sys_iblock_type_id",
-				"sys_iblock_id",
-				array(
-					"MIN_PERMISSION" => "R",
-				),
-				"",
-				""
-			) ?>
-		</td>
-	</tr>
-
-	<tr>
-		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Код раздела</label>
-		</td>
-		<td class="adm-detail-content-cell-r" width="50%">
-			<input name="attribs_section_code" type="text" value="<?= Option::get("rodzeta.attribs", "attribs_section_code", "RODZETA_ATTRIBS") ?>" disabled>
-			<input name="attribs_section_code" type="hidden" value="RODZETA_ATTRIBS">
-		</td>
-	</tr>
-	*/ ?>
-
 	<tr class="heading">
 		<td colspan="2">Хранение атрибутов</td>
 	</tr>
@@ -277,19 +243,6 @@ function RodzetaSettingsAttribsUpdate() {
 			) ?>
 		</td>
 	</tr>
-
-	<?php /*
-	<tr>
-		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Свойство "Характеристики"</label>
-		</td>
-		<td class="adm-detail-content-cell-r" width="50%">
-			<select name="property_id" id="rodzeta-attribs-property-id" data-value="<?= Option::get("rodzeta.attribs", "property_id", 2) ?>">
-				<option value="">(выберите свойство)</option>
-			</select>
-		</td>
-	</tr>
-	*/ ?>
 
 	<?php
 	 $tabControl->buttons();
