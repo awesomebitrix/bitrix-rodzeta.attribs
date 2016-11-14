@@ -31,7 +31,7 @@ $tabControl = new \CAdminTabControl("tabControl", [
 		"DIV" => "edit2",
 		"TAB" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_SET"),
 		"TITLE" => Loc::getMessage("RODZETA_ATTRIBS_DATA_TAB_TITLE_SET", [
-			"#FILE#" => _FILE_ATTRIBS
+			"#FILE#" => FILE_ATTRIBS
 		]),
   ],
   [

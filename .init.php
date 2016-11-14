@@ -9,11 +9,11 @@ namespace Rodzeta\Attribs;
 
 use Bitrix\Main\Config\Option;
 
-define(__NAMESPACE__ . "\_APP", __DIR__ . "/");
-define(__NAMESPACE__ . "\_LIB", __DIR__  . "/lib/");
-define(__NAMESPACE__ . "\_FILE_ATTRIBS", "/upload/.rodzeta.attribs.php");
+define(__NAMESPACE__ . "\APP", __DIR__ . "/");
+define(__NAMESPACE__ . "\LIB", __DIR__  . "/lib/");
+define(__NAMESPACE__ . "\FILE_ATTRIBS", "/upload/.rodzeta.attribs.php");
 
-require _LIB . "encoding/php-array.php";
+require LIB . "encoding/php-array.php";
 
 function CreateCache($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
@@ -45,11 +45,11 @@ function CreateCache($attribs) {
 		return ($a["SORT"] < $b["SORT"]) ? -1 : 1;
 	});
 
-	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, [$result, $sefCodes]);
+	\Encoding\PhpArray\Write($basePath . FILE_ATTRIBS, [$result, $sefCodes]);
 }
 
 function Config() {
-	return include $_SERVER["DOCUMENT_ROOT"] . _FILE_ATTRIBS;
+	return include $_SERVER["DOCUMENT_ROOT"] . FILE_ATTRIBS;
 }
 
 function Init(&$item) {
