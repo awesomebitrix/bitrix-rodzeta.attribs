@@ -108,7 +108,7 @@ function RodzetaSettingsAttribsUpdate() {
 
 	<tr>
 		<td colspan="2">
-			<table width="100%" class="rodzeta-attribs">
+			<table width="100%" class="rodzeta-attribs js-table-autoappendrows">
 				<thead>
 					<tr>
 						<th></th>
@@ -127,7 +127,7 @@ function RodzetaSettingsAttribsUpdate() {
 					</tr>
 				</thead>
 				<tbody>
-					<?php list($attribs) = Config(); foreach (AppendValues($attribs, 10, array_fill(0, 12, null)) as $i => $row) { ?>
+					<?php list($attribs) = Config(); foreach (AppendValues($attribs, 1, array_fill(0, 12, null)) as $i => $row) { ?>
 						<tr>
 							<td>
 								<input type="text" placeholder="Код атрибута"
