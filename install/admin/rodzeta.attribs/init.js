@@ -2,37 +2,7 @@
 BX.ready(function () {
 	"use strict";
 
-	// autoappend rows
-	function makeAutoAppend($table) {
-		function bindEvents($row) {
-			for (let $input of $row.querySelectorAll('input[type="text"]')) {
-				$input.addEventListener("change", function (event) {
-					let $tr = event.target.closest("tr");
-					let $trLast = $table.rows[$table.rows.length - 1];
-					if ($tr != $trLast) {
-						return;
-					}
-					$table.insertRow(-1);
-					$trLast = $table.rows[$table.rows.length - 1];
-					$trLast.innerHTML = $tr.innerHTML;
-					let idx = parseInt($tr.getAttribute("data-idx")) + 1;
-					$trLast.setAttribute("data-idx", idx);
-					for (let $input of $trLast.querySelectorAll('input[type="text"]')) {
-						$input.setAttribute("name", $input.getAttribute("name").replace(/([a-zA-Z0-9])\[\d+\]/, "$1[" + idx + "]"));
-					}
-					bindEvents($trLast);
-				});
-			}
-		}
-		for (let $row of document.querySelectorAll(".js-table-autoappendrows tr")) {
-			bindEvents($row);
-		}
-	}
-	for (let $table of document.querySelectorAll(".js-table-autoappendrows")) {
-		makeAutoAppend($table);
-	}
-
-	// edit attribs
+	// init attribs
 	var $selectSections = document.querySelectorAll(".rodzeta-attribs-sections");
 	var selectSectionsSrc = document.querySelector(".rodzeta-attribs-sections-src").innerHTML;
 	for (var i = 0, l = $selectSections.length; i < l; i++) {
@@ -64,6 +34,36 @@ BX.ready(function () {
 				}
 			}
 		}
+	}
+
+	// autoappend rows
+	function makeAutoAppend($table) {
+		function bindEvents($row) {
+			for (let $input of $row.querySelectorAll('input[type="text"]')) {
+				$input.addEventListener("change", function (event) {
+					let $tr = event.target.closest("tr");
+					let $trLast = $table.rows[$table.rows.length - 1];
+					if ($tr != $trLast) {
+						return;
+					}
+					$table.insertRow(-1);
+					$trLast = $table.rows[$table.rows.length - 1];
+					$trLast.innerHTML = $tr.innerHTML;
+					let idx = parseInt($tr.getAttribute("data-idx")) + 1;
+					$trLast.setAttribute("data-idx", idx);
+					for (let $input of $trLast.querySelectorAll('input[type="text"]')) {
+						$input.setAttribute("name", $input.getAttribute("name").replace(/([a-zA-Z0-9])\[\d+\]/, "$1[" + idx + "]"));
+					}
+					bindEvents($trLast);
+				});
+			}
+		}
+		for (let $row of document.querySelectorAll(".js-table-autoappendrows tr")) {
+			bindEvents($row);
+		}
+	}
+	for (let $table of document.querySelectorAll(".js-table-autoappendrows")) {
+		makeAutoAppend($table);
 	}
 
 });

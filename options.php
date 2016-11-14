@@ -79,28 +79,6 @@ $tabControl->begin();
 
 ?>
 
-<script>
-
-/*
-function RodzetaSettingsAttribsUpdate() {
-	let $selectIblock = document.getElementById("iblock_id");
-	let $selectProperty = document.getElementById("rodzeta-attribs-property-id");
-	let iblockId = $selectIblock.value;
-	let selectedOption = $selectProperty.getAttribute("data-value");
-
-	BX.ajax.loadJSON("/bitrix/admin/rodzeta.attribs/optionsproperties.php?iblock_id=" + iblockId, function (data) {
-		let html = ["<option value=''>(выберите свойство)</option>"];
-		for (let k in data) {
-			let selected = selectedOption == k? "selected" : "";
-			html.push("<option " + selected + " value='" + k + "'>[" + k + "] " + data[k] + "</option>");
-		}
-		$selectProperty.innerHTML = html.join("\n");
-	});
-}
-*/
-
-</script>
-
 <form method="post" action="<?= sprintf('%s?mid=%s&lang=%s', $request->getRequestedPage(), urlencode($mid), LANGUAGE_ID) ?>" type="get">
 	<?= bitrix_sessid_post() ?>
 
@@ -127,8 +105,16 @@ function RodzetaSettingsAttribsUpdate() {
 					</tr>
 				</thead>
 				<tbody>
-					<?php list($attribs) = Config(); foreach (AppendValues($attribs, 1, array_fill(0, 12, null)) as $i => $row) { ?>
-						<tr>
+					<?php
+						list($attribs) = Config();
+						$idx = 0;
+						foreach (AppendValues($attribs, 1, array_fill(0, 12, null)) as $i => $row) {
+							$idx++;
+							if ($i == "") {
+								$i = $idx;
+							}
+					?>
+						<tr data-idx="<?= $idx ?>">
 							<td>
 								<input type="text" placeholder="Код атрибута"
 									name="attribs[<?= $i ?>][CODE]"
@@ -201,12 +187,6 @@ function RodzetaSettingsAttribsUpdate() {
 									size="10">
 							</td>
 						</tr>
-						<tr>
-							<td colspan="4">
-								<br>
-								<br>
-							</td>
-						<tr>
 					<?php } ?>
 				</tbody>
 			</table>
