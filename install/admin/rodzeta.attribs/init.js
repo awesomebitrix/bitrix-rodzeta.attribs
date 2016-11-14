@@ -51,7 +51,7 @@ BX.ready(function () {
 					$trLast.innerHTML = $tr.innerHTML;
 					let idx = parseInt($tr.getAttribute("data-idx")) + 1;
 					$trLast.setAttribute("data-idx", idx);
-					for (let $input of $trLast.querySelectorAll('input[type="text"]')) {
+					for (let $input of $trLast.querySelectorAll('input,select')) {
 						$input.setAttribute("name", $input.getAttribute("name").replace(/([a-zA-Z0-9])\[\d+\]/, "$1[" + idx + "]"));
 					}
 					bindEvents($trLast);
