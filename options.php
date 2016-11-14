@@ -245,60 +245,8 @@ function RodzetaSettingsAttribsUpdate() {
 
 </form>
 
-<style>
-
-table.rodzeta-attribs input,
-table.rodzeta-attribs select,
-table.rodzeta-attribs label {
-	margin-bottom: 4px !important;
-}
-
-</style>
-
-<script>
-
-BX.ready(function () {
-	"use strict";
-
-	//RodzetaSettingsAttribsUpdate();
-
-	var $selectSections = document.querySelectorAll(".rodzeta-attribs-sections");
-	var selectSectionsSrc = document.querySelector(".rodzeta-attribs-sections-src").innerHTML;
-	for (var i = 0, l = $selectSections.length; i < l; i++) {
-		var $sections = $selectSections[i].querySelector("input");
-
-		// append sections selector
-		$selectSections[i].innerHTML = $selectSections[i].innerHTML + selectSectionsSrc;
-		var $selectSectionsInput = $selectSections[i].querySelector("select");
-
-		$selectSectionsInput.onchange = function (event) {
-			// update selected options
-			var sectionsIds = [];
-			for (var i in event.target.options) {
-				if (event.target.options[i].selected) {
-					sectionsIds.push(event.target.options[i].value);
-				}
-			}
-			event.target.parentNode.querySelector("input").value = sectionsIds.join(",");
-		}
-
-		// init selected options
-		var sectionsIds = $sections.value.split(",");
-		if (sectionsIds.length > 0) {
-			for (var idx in sectionsIds) {
-				if (sectionsIds[idx] != "") {
-					var $option = $selectSectionsInput.querySelector('[value="' + sectionsIds[idx] + '"]');
-					if ($option) {
-						$option.selected = true;
-					}
-				}
-			}
-		}
-	}
-
-});
-
-</script>
+<link href="/bitrix/admin/rodzeta.attribs/style.css" type="text/css" rel="stylesheet" />
+<script src="/bitrix/admin/rodzeta.attribs/init.js"></script>
 
 <?php
 
