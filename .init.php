@@ -39,10 +39,7 @@ function CreateCache($attribs) {
 
 	// ordering by key SORT
 	uasort($result, function ($a, $b) {
-		if ($a["SORT"] == $b["SORT"]) {
-			return 0;
-		}
-		return ($a["SORT"] < $b["SORT"]) ? -1 : 1;
+		return (int)$a["SORT"] <=> (int)$b["SORT"];
 	});
 
 	\Encoding\PhpArray\Write($basePath . FILE_ATTRIBS, [$result, $sefCodes]);
@@ -83,7 +80,6 @@ function Init(&$item) {
 		}
 	}
 	unset($item["PROPERTIES"]["RODZETA_ATTRIBS"]);
-	//unset($item["PROPERTIES"]["LINKS"]);
 }
 
 function BuildTree(&$elements, $parentId = 0) {
